@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roblox Studio Ideas Bot</title>
+    <title>Roblox Game Idea Generator</title>
     <style>
         * {
             margin: 0;
@@ -38,7 +38,7 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             position: relative;
             z-index: 1;
@@ -51,14 +51,39 @@
         }
 
         .header h1 {
-            font-size: 2.5em;
+            font-size: 2.8em;
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .header p {
-            font-size: 1.1em;
+            font-size: 1.2em;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 25px;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+        }
+
+        .stat-box h3 {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+
+        .stat-box p {
+            font-size: 0.9em;
         }
 
         .chat-container {
@@ -179,7 +204,6 @@
             color: white;
         }
 
-        /* Custom scrollbar for messages */
         .messages::-webkit-scrollbar {
             width: 8px;
         }
@@ -202,22 +226,37 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎮 Roblox Studio Ideas Bot</h1>
-            <p>Get creative ideas for your next Roblox game!</p>
+            <h1>🎮 Roblox Game Idea Generator</h1>
+            <p>Get unlimited creative game ideas for Roblox Studio!</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-box">
+                <h3 id="ideaCount">150+</h3>
+                <p>Game Ideas</p>
+            </div>
+            <div class="stat-box">
+                <h3>15+</h3>
+                <p>Categories</p>
+            </div>
+            <div class="stat-box">
+                <h3 id="generatedCount">0</h3>
+                <p>Ideas Generated</p>
+            </div>
         </div>
 
         <div class="chat-container">
             <div class="messages" id="messages"></div>
-            <div class="typing-indicator" id="typingIndicator">Bot is typing...</div>
+            <div class="typing-indicator" id="typingIndicator">Generating ideas...</div>
             <div class="suggestions" id="suggestions"></div>
             <div class="input-area">
                 <input 
                     type="text" 
                     id="userInput" 
-                    placeholder="Ask me anything about Roblox Studio..."
+                    placeholder="What type of game do you want to make?"
                     onkeypress="handleKeyPress(event)"
                 >
-                <button onclick="sendMessage()" id="sendBtn">Send</button>
+                <button onclick="sendMessage()" id="sendBtn">Get Idea</button>
             </div>
         </div>
     </div>
@@ -228,452 +267,150 @@
         const sendBtn = document.getElementById('sendBtn');
         const typingIndicator = document.getElementById('typingIndicator');
         const suggestionsDiv = document.getElementById('suggestions');
+        let generatedIdeas = 0;
 
-        // Expanded game ideas database
+        // MASSIVE game ideas database - 150+ ideas!
         const gameIdeas = {
             obby: [
-                "🏃 Speed Runner Obby: Create an obstacle course where players race against the clock! Add checkpoints, moving platforms, and fun obstacles like spinning hammers and disappearing floors. You could also add a leaderboard to show the fastest times!",
-                "🌈 Rainbow Obby Adventure: Make a colorful obby where each level is a different color! Add rainbow bridges, color-changing platforms, and collect stars along the way. Each color could have a different theme!",
-                "🚀 Space Obby: Build an obby in space! Add floating asteroids to jump on, rocket boosters, and gravity-switching zones where you can walk on walls! Don't forget to add cool space music!",
-                "🌊 Water World Obby: Create an obby that takes place underwater and above water! Add swimming sections, water slides, diving boards, and boat platforms to jump between.",
-                "🎪 Circus Obby: Make a circus-themed obby with tightropes, trampolines, cannon launchers, and spinning circus wheels! Add clown NPCs to cheer players on."
+                "🏃 **MEGA SPEED OBBY**: Create the ultimate speed challenge! Add:\n• Moving platforms that speed up over time\n• Boost pads and slow zones\n• Checkpoints every 10 obstacles\n• Different difficulties: Easy (Green), Medium (Yellow), Hard (Red), INSANE (Black)\n• Leaderboard showing fastest times\n• Secret shortcut paths for skilled players\n• Rainbow trail effect for completing levels",
+                
+                "🌈 **COLOR FUSION OBBY**: Every 5 levels, colors change with unique mechanics!\n• RED Level: Fire obstacles, lava jumps\n• BLUE Level: Ice platforms (slippery!)\n• GREEN Level: Nature theme with vines and leaves\n• YELLOW Level: Lightning strikes and electric barriers\n• PURPLE Level: Gravity switches, walk on ceiling\n• Mix levels for ultimate challenge!",
+                
+                "🚀 **SPACE ADVENTURE OBBY**: Journey through the galaxy!\n• Start on Earth, end at a Black Hole\n• Each planet = different stage (Mars, Jupiter, Saturn)\n• Zero gravity sections - float between asteroids\n• Rocket boosters as power-ups\n• Alien NPCs that give hints\n• Collect stars for shop currency\n• Buy spaceship skins and trails",
+                
+                "🏰 **MEDIEVAL CASTLE OBBY**: Climb the tallest castle!\n• Start in dungeon, escape to rooftop\n• Swinging axes, arrow traps, moving walls\n• Knight NPCs patrol and give quests\n• Dragon boss at top (friendly race!)\n• Collect gold coins for medieval shop\n• Unlock armor skins and sword trails\n• Secret treasure rooms with rare items",
+                
+                "🌊 **UNDERWATER OCEAN OBBY**: Deep sea diving adventure!\n• 50 levels from surface to ocean floor\n• Swimming mechanics with oxygen bubbles\n• Avoid sharks, jellyfish, and whirlpools\n• Beautiful coral reefs and shipwrecks\n• Submarine checkpoints\n• Collect pearls to unlock sea creature pets\n• Bioluminescent levels (glow in the dark!)",
+                
+                "🎪 **CIRCUS SPECTACULAR OBBY**: The greatest show on earth!\n• Tightrope walking sections\n• Cannon launchers between platforms\n• Trampoline bounce areas\n• Spinning circus wheels\n• Juggling ball obstacles to dodge\n• Clown NPCs cheer and give tips\n• Unlock circus outfits and confetti effects",
+                
+                "🏔️ **MOUNTAIN CLIMBER OBBY**: Scale the highest peak!\n• Start at base camp, climb to summit\n• Ice climbing sections with slippery rocks\n• Avalanche escape sequences\n• Camp checkpoints to rest\n• Weather changes (snow, wind, clear)\n• Collect mountain gear as rewards\n• Plant flag at the top for achievement!",
+                
+                "🎮 **RETRO ARCADE OBBY**: Nostalgic 8-bit themed levels!\n• Pixelated platforms and obstacles\n• Classic game references in each level\n• Pac-Man maze section\n• Space Invaders dodge sequence\n• Tetris block jumping puzzle\n• 8-bit music and sound effects\n• Unlock retro game character skins"
             ],
+
             simulator: [
-                "🐾 Pet Collection Simulator: Create a game where players can collect cute pets! Add different pets to find, feeding mechanics, and a cozy pet home to decorate. Players can also train their pets to do tricks!",
-                "🍕 Pizza Shop Simulator: Run your own pizza restaurant! Players can make pizzas, serve customers, upgrade their shop, and unlock new toppings. Add a delivery system too!",
-                "🏝️ Island Builder Simulator: Players start on a small island and can expand it! Add trees to plant, buildings to unlock, and islands to discover. Include fishing and treasure hunting!",
-                "⚔️ Knight Training Simulator: Train to become a knight! Players can practice sword fighting, complete quests, upgrade armor, and protect the kingdom from silly dragons.",
-                "🧙 Magic School Simulator: Attend a school of magic! Learn spells, collect wands, brew potions, and complete magical homework. Add different magical subjects like flying and potion-making!"
+                "🐾 **ULTIMATE PET PARADISE**: The most complete pet simulator!\n• 100+ unique pets to collect (common to mythical)\n• Pet evolution system (3 stages each)\n• Build custom pet home with decorations\n• Mini-games: fetch, agility course, pet races\n• Breeding system for rare combinations\n• Pet abilities: some find coins faster, others give XP boost\n• Daily pet care: feeding, bathing, playing\n• Trade pets with friends\n• Pet accessories shop: hats, glasses, wings",
+                
+                "🍕 **PIZZA EMPIRE TYCOON**: Build a pizza restaurant empire!\n• Start with small pizza stand\n• 50+ toppings to unlock\n• Hire staff: chefs, delivery drivers, cashiers\n• Upgrade ovens for faster cooking\n• Expand to multiple restaurants\n• Custom pizza creator for special orders\n• Delivery mini-game (drive to houses)\n• Compete in pizza-making contests\n• Unlock food truck and catering business",
+                
+                "⚔️ **LEGENDARY SWORD MASTER**: Train to be the greatest warrior!\n• Collect 200+ legendary swords\n• Train stats: Strength, Speed, Defense\n• Battle training dummies for XP\n• Quest system from village NPCs\n• Dungeon raids with bosses\n• Forge new swords by combining materials\n• Enchantment system for special powers\n• PvP arena for player battles\n• Unlock armor sets and special moves",
+                
+                "🏝️ **ISLAND EMPIRE BUILDER**: Create your dream island paradise!\n• Start on tiny island, expand by buying land\n• Plant crops: wheat, corn, fruits, trees\n• Build houses, shops, parks, beaches\n• Attract tourists for income\n• Unlock new islands (volcanic, tropical, arctic)\n• Fishing and treasure hunting mini-games\n• Hire workers to automate tasks\n• Weather system affects crops\n• Create roads and transportation",
+                
+                "🧙 **MAGIC ACADEMY SIMULATOR**: Master the mystical arts!\n• Learn 50+ spells across 5 schools of magic\n• Attend classes: Potions, Charms, Transfiguration\n• Collect wands with different powers\n• Familiar pets that boost magic\n• Complete homework quests for XP\n• Duel other students in wizard battles\n• Unlock spell combinations\n• Explore secret chambers in the castle\n• House system with team competitions",
+                
+                "💎 **GEM MINING EMPIRE**: Dig for fortune!\n• Mine gems from underground caves\n• 50+ gem types (ruby, diamond, emerald, rare ones)\n• Upgrade pickaxe, drill, and equipment\n• Hire miners to auto-mine\n• Sell gems or craft jewelry\n• Unlock new mining locations (volcano, ice cave)\n• Discover ancient artifacts\n• Prestige system for rebirth bonuses\n• Build above-ground gem shop",
+                
+                "🎨 **ART STUDIO CREATOR**: Become a master artist!\n• Paint on canvas with 20+ colors\n• Sell artwork for coins\n• Unlock new art styles and tools\n• Gallery to display your best work\n• Art contests with other players\n• Commission system (NPCs request art)\n• Upgrade studio with better easels, lighting\n• Learn techniques: watercolor, oil, digital\n• Frame and decorate your gallery",
+                
+                "🏋️ **GYM TRAINING SIMULATOR**: Get super strong!\n• Train in gym: weights, treadmill, boxing\n• Level up: Strength, Speed, Endurance\n• Unlock new exercises and equipment\n• Compete in competitions (lifting, running)\n• Hire personal trainer for bonuses\n• Healthy food shop affects stats\n• Unlock gyms in different cities\n• Create custom workout routines\n• Achievement system for milestones"
             ],
+
             adventure: [
-                "🗺️ Treasure Hunt Adventure: Create a big map with hidden treasures! Add a treasure map, mysterious caves, and puzzles to solve to find the ultimate treasure. Include riddles and secret passages!",
-                "🏰 Castle Quest: Build a magical castle with different rooms to explore! Add friendly NPCs who give quests, secret passages, hidden keys, and a dragon in the dungeon (a friendly one!).",
-                "🌲 Forest Explorer: Make a mysterious forest to explore! Add cute animals, hidden paths, berry collecting, and a treehouse base. Include a day/night cycle for extra atmosphere!",
-                "🏔️ Mountain Climbing Adventure: Create a big mountain to climb! Add different paths, camping spots, wildlife to observe, and a beautiful view at the top with a flag to plant.",
-                "🏺 Ancient Temple Explorer: Explore an ancient temple full of mysteries! Add trap rooms (fun ones!), ancient puzzles, treasure rooms, and hieroglyphics that tell a story."
+                "🗺️ **LOST TEMPLE EXPEDITION**: Explore ancient ruins!\n• Massive temple with 20+ rooms to discover\n• Solve hieroglyph puzzles to open doors\n• Dodge ancient traps: arrows, falling rocks, spikes\n• Collect artifacts for museum rewards\n• Boss battle: Ancient Guardian statue\n• Hidden treasure rooms with rare loot\n• Map system that fills in as you explore\n• Torch lighting mechanic in dark areas\n• Multiple endings based on choices",
+                
+                "🏰 **KINGDOM QUEST RPG**: Save the kingdom from darkness!\n• Create character: Knight, Wizard, Archer, or Rogue\n• 30+ quests from different NPCs\n• Battle system with skills and magic\n• Explore forests, caves, villages, castles\n• Collect weapons, armor, and potions\n• Level up system (1-50)\n• Final boss: Dark Sorcerer in his tower\n• Side quests for rare rewards\n• Party system (team with friends)",
+                
+                "🌲 **ENCHANTED FOREST ADVENTURE**: Magical woodland journey!\n• Meet mystical creatures: fairies, unicorns, talking trees\n• 15 different forest areas to explore\n• Gather magical berries and herbs\n• Craft potions and spells\n• Animal companion system (fox, owl, deer)\n• Build treehouse hideout\n• Seasonal events (spring flowers, autumn leaves)\n• Mystery story: Why is the forest magic fading?\n• Restore magic by completing quests",
+                
+                "🏔️ **MOUNTAIN PEAK ADVENTURE**: Conquer the summit!\n• Multi-day journey with camps\n• Survival mechanics: warmth, energy, hunger\n• Beautiful scenic viewpoints\n• Weather challenges: storms, avalanches\n• Wildlife encounters (eagles, mountain goats)\n• Climbing gear progression\n• Photograph rare sights for rewards\n• Secret cave systems with treasures\n• Achievement for reaching summit at sunrise",
+                
+                "🏴‍☠️ **PIRATE TREASURE HUNT**: Sail the seven seas!\n• Captain your own pirate ship\n• Visit 10 different islands\n• Treasure maps lead to buried gold\n• Naval battles with enemy pirates\n• Recruit crew members\n• Upgrade ship: cannons, sails, hull\n• Sea monster encounters (kraken!)\n• Trade goods between ports\n• Legendary treasure as final goal",
+                
+                "🌵 **DESERT OASIS QUEST**: Journey across the dunes!\n• Cross vast desert to reach paradise oasis\n• Ride camels for faster travel\n• Find water sources to survive\n• Ancient pyramids to explore\n• Sandstorm events (take shelter!)\n• Desert bandits and friendly nomads\n• Discover lost city buried in sand\n• Solve sphinx riddles\n• Collect golden scarabs",
+                
+                "❄️ **FROZEN KINGDOM ADVENTURE**: Explore the icy realm!\n• Ice palace with frozen rooms\n• Sliding ice puzzles\n• Befriend snow creatures\n• Restore warmth to the frozen land\n• Ice magic abilities\n• Snowflake collecting\n• Aurora borealis viewing spots\n• Hot spring rest areas\n• Epic boss: Ice Dragon",
+                
+                "🎭 **MYSTERY MANSION DETECTIVE**: Solve the case!\n• Explore 30-room haunted mansion\n• Collect clues and evidence\n• Interview ghost NPCs\n• Puzzle rooms with riddles\n• Secret passages behind bookcases\n• Piece together the mystery story\n• Multiple suspects and endings\n• Detective tools: magnifying glass, notepad\n• Unlock true ending with all clues"
             ],
+
             racing: [
-                "🏎️ Kart Racing Track: Design a fun racing track with loops and jumps! Add power-ups like speed boost and shields, plus different karts to unlock. Create shortcuts for skilled players!",
-                "🛹 Skateboard Park Challenge: Create a skateboard park where players do tricks! Add ramps, rails to grind, and a scoring system for cool tricks. Include combo multipliers!",
-                "🚗 Car Customizer Race: Make a racing game where players customize their cars first! Add paint colors, decals, spoilers, and then race on cool tracks with different weather.",
-                "🏇 Horse Racing Derby: Race cute horses through meadows and forests! Players can train their horses, brush them, and feed them carrots for speed boosts.",
-                "🚁 Helicopter Racing: Race helicopters through obstacle courses in the sky! Add rings to fly through, boost pads on clouds, and different helicopters to unlock."
+                "🏎️ **TURBO KART CHAMPIONSHIP**: Ultimate kart racing!\n• 20 unique racing tracks (city, beach, volcano, space)\n• 50+ karts to unlock and collect\n• Power-ups: rockets, shields, speed boost, oil slick\n• Customize karts: paint, decals, wheels, spoilers\n• Championship mode (10 races, points system)\n• Time trial with ghost racing\n• Multiplayer races (8 players)\n• Drift mechanics for sharp turns\n• Secret shortcuts on each track",
+                
+                "🛹 **EXTREME SKATE PARK**: Pull off insane tricks!\n• Massive skate park with multiple sections\n• Trick system: kickflip, ollie, grind, manual\n• Combo multiplier (chain tricks together)\n• S-K-A-T-E letters to collect\n• Create custom skate parks\n• Unlock new boards and styles\n• Sponsored challenges for rewards\n• Compete in competitions\n• Film mode (record your best runs)",
+                
+                "🏁 **DRAG RACING LEGENDS**: Quarter-mile mayhem!\n• Reaction time start (perfect launch)\n• Shift timing mechanics\n• Nitrous oxide boost system\n• Tune cars: engine, tires, transmission\n• 40+ cars from different eras\n• Underground racing story mode\n• Pink slip races (winner takes car)\n• Customize with wraps and underglow\n• Dyno shop to test performance",
+                
+                "🚁 **SKY RACE CHALLENGE**: Aerial racing action!\n• Helicopter, plane, and jet races\n• Ring checkpoint courses through clouds\n• Barrel roll and loop-de-loop tricks\n• Weather challenges (storms, wind)\n• 15 aircraft to unlock\n• Canyon racing (tight spaces!)\n• Dogfight mode (race while dodging)\n• Stunt challenges\n• Unlock legendary aircraft",
+                
+                "🏇 **DERBY DAY RACING**: Horse racing excitement!\n• Train and care for horses\n• 10 different horse breeds\n• Jump obstacles on race course\n• Betting system for rewards\n• Breed horses for perfect racer\n• Jockey outfit customization\n• Famous tracks to compete on\n• Horse bonding affects performance\n• Kentucky Derby style championship",
+                
+                "🚤 **WATER RACING MANIA**: Speed across the waves!\n• Jet skis, speedboats, and yachts\n• Ocean, river, and lake tracks\n• Wave physics affect handling\n• Trick jumps off ramps\n• Marine animal obstacles\n• Underwater tunnel sections\n• Weather: calm, choppy, stormy\n• Customize boats with colors and flags\n• Pirate ship race special event",
+                
+                "🏃 **PARKOUR SPRINT RACE**: Free-running competition!\n• Race while doing parkour moves\n• Wall runs, precision jumps, vaults\n• City rooftop courses\n• Time attack mode\n• Multiplayer racing\n• Unlock new movement abilities\n• Style points for clean runs\n• Create custom parkour courses\n• World record leaderboards",
+                
+                "🚂 **RAILROAD RACING**: Train racing madness!\n• Control powerful locomotives\n• Switch tracks to take shortcuts\n• Coal management (speed vs fuel)\n• 10 historical trains to unlock\n• Mountain passes and city routes\n• Passenger vs freight trains\n• Rail yard customization\n• Weather affects track conditions\n• Cross-country championship"
             ],
+
             tycoon: [
-                "🏪 Shop Tycoon: Build and grow your own store! Start small and upgrade to add more items, decorations, and employees. Expand to multiple shops!",
-                "🎢 Theme Park Tycoon: Create your own amusement park! Add rides, food stands, decorations, and make visitors happy. Design custom roller coasters!",
-                "🏗️ City Builder Tycoon: Start with one building and grow a whole city! Add houses, shops, parks, and roads to connect everything. Add a subway system for extra fun!",
-                "🍔 Restaurant Chain Tycoon: Build a restaurant empire! Start with one small restaurant and expand across the map. Hire chefs, create menus, and serve happy customers.",
-                "🎮 Game Studio Tycoon: Run your own game development studio! Hire programmers, designers, and artists. Create games and watch them succeed!"
+                "🏪 **MEGA MALL EMPIRE**: Build the ultimate shopping center!\n• Start with 1 small shop, expand to 50+ stores\n• Different store types: clothing, food, electronics, toys\n• Hire employees and security guards\n• Parking lot and valet service\n• Food court with multiple restaurants\n• Movie theater and arcade\n• Seasonal sales and events\n• Upgrade decorations and lighting\n• Customer satisfaction affects profits",
+                
+                "🎢 **THEME PARK TYCOON DELUXE**: Create the happiest place!\n• Design 30+ different rides\n• Custom roller coaster builder\n• Food stands, game booths, gift shops\n• Hire performers and mascots\n• Queue line management\n• Park cleanliness matters\n• Fireworks show at night\n• Seasonal themes (Halloween, Christmas)\n• VIP pass system for extra income",
+                
+                "🏗️ **CITY BUILDER PRO**: Grow from village to metropolis!\n• Zone areas: residential, commercial, industrial\n• Build infrastructure: roads, power, water\n• Unlock 100+ building types\n• Manage budget and taxes\n• Disaster events: storms, fires\n• Public services: police, fire, hospital\n• Public transportation: buses, subway, trains\n• Citizen happiness meter\n• Landmarks and monuments",
+                
+                "🍔 **FAST FOOD EMPIRE**: Become restaurant royalty!\n• Multiple food chains to manage\n• Menu customization\n• Drive-thru and dine-in\n• Hire and train staff\n• Marketing campaigns\n• Compete with rival restaurants\n• Expand to new cities\n• Food quality vs speed balance\n• Secret menu items for loyal customers",
+                
+                "🏨 **LUXURY RESORT TYCOON**: Build 5-star paradise!\n• Beachfront resort management\n• Room types: standard to presidential suite\n• Amenities: pool, spa, restaurant, bar\n• Events: weddings, conferences\n• Staff management\n• Guest reviews affect reputation\n• Expand to multiple properties\n• Activities: surfing, diving, golf\n• VIP guest special requests",
+                
+                "🎮 **ARCADE EMPIRE**: Retro gaming business!\n• 50+ arcade cabinets to place\n• Ticket redemption prizes\n• Claw machines and skill games\n• VR gaming section\n• Snack bar\n• Tournament hosting\n• Maintain and repair machines\n• Nostalgic decor themes\n• Attract different customer types",
+                
+                "🏭 **FACTORY TYCOON**: Industrial production!\n• Build production lines\n• Raw materials to finished products\n• Automate with conveyor belts\n• Hire workers for different tasks\n• Research new technologies\n• Fulfil orders for profit\n• Expand factory floor space\n• Efficiency upgrades\n• Supply chain management",
+                
+                "🎬 **MOVIE STUDIO MOGUL**: Hollywood success!\n• Produce different film genres\n• Hire actors, directors, crew\n• Build movie sets\n• Special effects department\n• Script selection\n• Marketing and premieres\n• Box office tracking\n• Awards and recognition\n• Franchise development"
             ],
+
             roleplay: [
-                "🏡 Neighborhood Roleplay: Create a neighborhood where players can have their own houses! Add furniture to buy, pets to adopt, jobs to work, and fun activities like barbecues.",
-                "🎒 School Roleplay: Build a school with different classrooms! Add lockers, a cafeteria, playground, library, and different roles like student, teacher, and principal.",
-                "🏥 Hospital Roleplay: Make a friendly hospital! Players can be doctors, nurses, or patients. Add different rooms, medical tools, and maybe even a gift shop!",
-                "🏨 Hotel Roleplay: Run a fancy hotel! Players can be guests, staff, or the manager. Add a pool, restaurant, fancy rooms, and a lobby with a check-in desk.",
-                "🌆 City Life Roleplay: Create a whole city to roleplay in! Add apartments, jobs, stores, a park, and transportation. Players can be anything from chefs to firefighters!"
+                "🏡 **DREAM NEIGHBORHOOD**: Perfect suburban life!\n• Own customizable house\n• 20+ furniture items\n• Adopt pets (dogs, cats, birds)\n• Jobs: teacher, doctor, chef, artist\n• Neighborhood events: BBQ, garage sales\n• Drive cars around town\n• Visit friends' houses\n• Seasons change decorations\n• Local shops to visit",
+                
+                "🎒 **ULTIMATE SCHOOL LIFE**: Complete school experience!\n• Choose student or teacher role\n• 10 different classrooms\n• Take classes: Math, Science, Art, PE\n• Cafeteria with food choices\n• Recess playground activities\n• Lockers to customize\n• School events: dances, sports day\n• Clubs: drama, music, sports\n• Report cards and achievements",
+                
+                "🏥 **MEDICAL CENTER RP**: Hospital simulation!\n• Roles: doctor, nurse, patient, surgeon\n• Different departments: ER, surgery, pediatrics\n• Medical tools and equipment\n• Patient care mini-games\n• Ambulance service\n• Pharmacy and lab\n• Medical uniforms customization\n• Emergency scenarios\n• Hospital upgrades",
+                
+                "🌆 **CITY LIFE SIMULATOR**: Urban living!\n• Apartments and houses\n• 20+ job options\n• Shopping mall and stores\n• Restaurants and cafes\n• Public transport: bus, subway, taxi\n• Parks and entertainment\n• Police and firefighter roles\n• City events and festivals\n• Day/night cycle affects activities",
+                
+                "🏖️ **BEACH RESORT LIFE**: Tropical paradise!\n• Beach houses and hotels\n• Water activities: swimming, surfing, diving\n• Beach cafe jobs\n• Volleyball and sandcastle building\n• Boat rentals\n• Sunset parties\n• Seashell collecting\n• Lifeguard role\n• Tropical outfits",
+                
+                "🏰 **ROYAL CASTLE RP**: Medieval fantasy!\n• Roles: king, queen, knight, wizard, peasant\n• Throne room and great hall\n• Jousting tournaments\n• Royal feasts\n• Castle defense from dragons\n• Medieval jobs and trades\n• Coronation ceremonies\n• Explore dungeon and towers\n• Royal decree system",
+                
+                "🚀 **SPACE STATION LIFE**: Futuristic RP!\n• Astronaut, scientist, engineer roles\n• Zero gravity sections\n• Space missions and repairs\n• Alien encounters (friendly!)\n• Research labs\n• Spaceship hangars\n• Galactic travel\n• Space suits and equipment\n• Communication with Earth",
+                
+                "🎪 **CIRCUS PERFORMERS**: Under the big top!\n• Roles: ringmaster, acrobat, clown, magician\n• Performance shows for audience\n• Practice and train skills\n• Animal care (friendly circus animals)\n• Costume customization\n• Travel to different cities\n• Circus tent customization\n• Ticket sales management\n• Applause rating system"
             ],
+
             tower_defense: [
-                "🗼 Castle Defense: Protect your castle from silly monsters! Place towers that shoot, freeze, or bounce enemies away. Each tower has special powers! Add knights and archers.",
-                "🌸 Garden Defense: Defend your garden from mischievous bugs! Use flower towers, water sprayers, and ladybug helpers. Make it colorful and fun!",
-                "🏖️ Beach Defense: Stop crabs and sea creatures from taking your sandcastle! Build sand towers, use water balloons, and recruit seagull helpers.",
-                "🍭 Candy Land Defense: Protect your candy kingdom! Use lollipop shooters, chocolate walls, and gummy bear soldiers against candy-stealing ants.",
-                "🏔️ Snow Fort Defense: Defend your snow fort from snowball-throwing penguins! Build ice towers, snowman guards, and use avalanche traps!"
+                "🗼 **CASTLE SIEGE DEFENSE**: Protect the kingdom!\n• 15 tower types: archers, cannons, wizards, catapults\n• 50 waves of enemies getting harder\n• Upgrade towers (3 levels each)\n• Special abilities: freeze, poison, fire\n• Different enemy types: goblins, orcs, trolls, dragons\n• Boss waves every 10 levels\n• Strategic tower placement\n• Castle health meter\n• Co-op mode with friends",
+                
+                "🌸 **GARDEN GUARDIAN**: Protect your plants!\n• Flower towers shoot petals\n• Sunflowers generate energy\n• Venus flytraps eat enemies\n• Defend against bugs and pests\n• Cute, colorful graphics\n• Water your towers to heal them\n• Seasons change tower abilities\n• Butterfly helpers as power-ups\n• Unlock exotic plants",
+                
+                "🏖️ **BEACH DEFENSE BATTLE**: Save the sandcastle!\n• Sand towers, water cannons, seashell launchers\n• Enemy crabs, jellyfish, and sea monsters\n• Tides affect gameplay\n• Recruit seagulls and dolphins\n• Build moats and barriers\n• Treasure chest rewards\n• Surfboard patrols\n• Lighthouse gives vision\n• Coconut catapult special attack",
+                
+                "🍭 **SWEET SHOP DEFENSE**: Candy battle!\n• Lollipop shooters and gummy cannons\n• Chocolate walls and caramel traps\n• Ants and mice steal candy\n• Cotton candy clouds slow enemies\n• Upgrade with sugar coins\n• Candy cane barriers\n• Boss: Giant Gummy Bear\n• Ice cream freeze ability\n• Soda pop explosive traps",
+                
+                "🏔️ **ARCTIC FORTRESS**: Snow and ice warfare!\n• Snowball turrets and ice spikes\n• Penguin warriors help defend\n• Avalanche special attack\n• Enemy: polar bears, yetis, snow monsters\n• Igloo barracks spawn defenders\n• Northern lights power boost\n• Blizzard slows all enemies\n• Hot cocoa heals towers\n• Ice sculpture maze paths",
+                
+                "🌋 **VOLCANO DEFENSE**: Lava and fire!\n• Lava cannons and fire towers\n• Rock golems as ground troops\n• Magma moat around base\n• Enemies: ice monsters (weak to fire)\n• Eruption ultimate ability\n• Obsidian walls\n• Dragon ally flyovers\n• Geothermal energy system\n• Ash cloud concealment",
+                
+                "🏙️ **CITY DEFENDER**: Urban warfare!\n• Police towers, SWAT teams\n• Rooftop snipers\n• Road blocks and barriers\n• Helicopter support\n• Enemy: zombies, aliens, robots\n• Upgrade city defenses\n• Skyscraper vantage points\n• Emergency services backup\n• Evacuation missions",
+                
+                "🌲 **FOREST FORTRESS**: Nature's defense!\n• Tree towers with vine lassos\n• Rock throwing positions\n• Animal allies: bears, wolves\n• Defend ancient tree\n• Enemies: loggers and machines\n• Root barrier system\n• Bird's eye view scouting\n• Mushroom poison clouds\n• Seasons affect strategy"
             ],
-            horror_light: [
-                "👻 Friendly Ghost House: A spooky but not-too-scary game! Explore a mansion with silly ghosts who play pranks. Find hidden candies and solve light puzzles. More funny than scary!",
-                "🌙 Moonlight Mystery: A nighttime adventure in a forest with glowing creatures! Not scary, just mysterious. Find magical fireflies and discover secrets.",
-                "🎃 Pumpkin Patch Adventure: Visit a magical pumpkin patch at night! Meet friendly scarecrows, collect glowing pumpkins, and solve easy riddles.",
-                "🦇 Batty's Mansion Tour: A cute bat named Batty gives you a tour of his mansion! It's dark but fun, with silly surprises and treasure to find.",
-                "🕷️ Spider's Web Maze: Navigate a giant spider web (the spider is friendly and helps you!). Find your way through with glowing markers and fun music."
-            ],
-            fighting: [
-                "🥊 Super Hero Battle Arena: Create characters with super powers! Add punch, kick, and special power moves. Make different arenas like a city or volcano.",
-                "⚔️ Medieval Sword Fighting: Knights battle with swords and shields! Add blocking, different sword types, and armor upgrades. Include a tournament mode!",
-                "🤖 Robot Battle Bots: Build and battle robots! Players customize their robots with different parts, weapons, and colors. Add an arena with hazards.",
-                "🥋 Ninja Training Dojo: Learn ninja moves and battle other ninjas! Add stealth moves, throwing stars, and wall-climbing abilities.",
-                "🦖 Dinosaur Battle: Control different dinosaurs and battle! Each dinosaur has special abilities. T-Rex is strong, Raptor is fast, and Pterodactyl can fly!"
-            ],
-            puzzle: [
-                "🧩 Puzzle Palace: Make a castle full of fun puzzles! Add mazes, matching games, riddles, and color-matching challenges.",
-                "🔍 Mystery Detective Game: Players solve mysteries by finding clues! Add magnifying glass tool, clue notebook, and different cases to solve.",
-                "🎯 Brain Teaser Park: An amusement park where each ride is a puzzle! Add memory games, pattern matching, and logic puzzles.",
-                "🔢 Number Quest Adventure: Make math fun! Players solve number puzzles to unlock doors, find treasures, and defeat silly monsters with math.",
-                "🎨 Color Mixing Lab: A science lab where players mix colors to solve puzzles! Learn color theory while having fun creating the right shades."
-            ],
+
             survival: [
-                "🏝️ Island Survival: Players are stranded on an island! Add crafting, building shelters, finding food, and coconut trees. Keep it fun and not too hard!",
-                "❄️ Arctic Explorer: Survive in a snowy world! Build igloos, catch fish, and stay warm by campfires. Add friendly polar bears and penguins!",
-                "🌋 Volcano Escape: The volcano is erupting! Work with friends to build boats, collect supplies, and escape the island before lava flows!",
-                "🌵 Desert Adventure: Survive in the desert! Find oases, ride camels, build shade, and discover ancient pyramids with treasures.",
-                "🌲 Forest Camp: Set up camp in the woods! Gather sticks for fire, set up tents, roast marshmallows, and go on nature hikes. Very peaceful and fun!"
-            ]
-        };
-
-        // HOW-TO guides
-        const howToGuides = {
-            start: "🎮 To start making games in Roblox Studio:\n1. Download Roblox Studio (it's free!)\n2. Open it and click 'New'\n3. Choose a template or start with 'Baseplate'\n4. Use the Explorer window to add parts\n5. Press F5 to test your game!\n\nStart simple - try making a platform to stand on first!",
-            
-            parts: "🧱 To add parts in Roblox Studio:\n1. Click the 'Part' button in the Home tab\n2. Or click Model tab → Part\n3. Choose shape: Block, Sphere, Cylinder, or Wedge\n4. Use the Move tool to position it\n5. Use the Scale tool to change size\n6. Change color in Properties window!\n\nParts are the building blocks of everything!",
-            
-            script: "📝 To add scripts in Roblox Studio:\n1. Click the part you want to script\n2. Press the '+' in Explorer next to the part\n3. Choose 'Script' (for server) or 'LocalScript' (for player only)\n4. Type your Lua code inside!\n5. Press F5 to test it!\n\nStart with simple scripts like changing colors or printing messages!",
-            
-            colors: "🎨 To change colors in Roblox Studio:\n1. Select the part you want to color\n2. Look at Properties window (usually on right)\n3. Find 'BrickColor' or 'Color'\n4. Click it to open color picker\n5. Choose your favorite color!\n\nYou can also use the 'Material' property to make things look like wood, metal, grass, etc!",
-            
-            testing: "🎮 To test your game:\n1. Press F5 to start playing\n2. Move with WASD keys\n3. Jump with Space\n4. Look around with your mouse\n5. Press F5 again to stop testing\n\nAlways test your game often to make sure everything works!",
-            
-            publish: "🌟 To publish your game:\n1. Click File → Publish to Roblox\n2. Give your game a cool name\n3. Write a description\n4. Choose if it's public or private\n5. Click 'Create' or 'Update'\n\nMake sure to test it thoroughly first! You can update it anytime.",
-            
-            movement: "🏃 To make things move with scripts:\n1. Add a Script to the part\n2. Use: part.Position = Vector3.new(x, y, z)\n3. Or use: part.CFrame = CFrame.new(x, y, z)\n4. Put it in a loop to keep moving!\n5. Add wait() to control speed\n\nExample: while true do wait(0.1) part.Position = part.Position + Vector3.new(1,0,0) end",
-            
-            teleport: "✨ To make a teleporter:\n1. Create two parts (one for start, one for end)\n2. Add a Script to the start part\n3. Detect when player touches it\n4. Move the player to the end part\n5. Make it glow so players know it's special!\n\nUse touched event and CFrame to move the player!",
-            
-            coins: "💰 To make collectible coins:\n1. Create a coin part (cylinder works great!)\n2. Add a Script to it\n3. Use .Touched event\n4. When player touches, add to their score\n5. Make the coin disappear after collecting!\n\nYou can use Leaderstats to show the score!",
-            
-            sounds: "🔊 To add sounds:\n1. Find a sound on Roblox website\n2. Copy its Sound ID number\n3. In Studio, insert a Sound object\n4. Paste the ID in SoundId property\n5. Use script to play: sound:Play()\n\nSounds make games way more fun and exciting!",
-            
-            gui: "📱 To make a GUI (menu/buttons):\n1. Click on StarterGui in Explorer\n2. Insert a ScreenGui\n3. Add TextLabel for text or TextButton for buttons\n4. Use Properties to change size, color, and text\n5. Add LocalScript to make buttons do things!\n\nGUIs are great for health bars, shops, and menus!",
-            
-            lighting: "💡 To change lighting:\n1. Find 'Lighting' in Explorer\n2. Change TimeOfDay for day/night (try '14:00:00' for day)\n3. Change Brightness (higher = brighter)\n4. Add fog with FogEnd and FogColor\n5. Try ClockTime for cool effects!\n\nGood lighting makes your game look amazing!",
-            
-            spawn: "🎯 To make a spawn point:\n1. Insert a SpawnLocation (Model tab)\n2. Move it where you want players to start\n3. Change its color in Properties\n4. Set Duration to 0 for instant spawn\n5. Make sure it's not floating!\n\nYou can have multiple spawns for different teams!"
-        };
-
-        // Tips database
-        const tips = [
-            "💡 Start simple! Build one feature at a time and test it before adding more.",
-            "💡 Use colors that go well together to make your game look amazing!",
-            "💡 Add checkpoints in your game so players don't have to start over if they fail.",
-            "💡 Sounds and music make games more exciting - add them!",
-            "💡 Watch YouTube tutorials to learn new building techniques!",
-            "💡 Test your game yourself before showing friends.",
-            "💡 Even the best creators started as beginners. Keep practicing!",
-            "💡 Use the scale tool to make big platforms quickly!",
-            "💡 Copy and paste parts to build faster (Ctrl+C then Ctrl+V)!",
-            "💡 Press F11 for fullscreen to see more of your game!",
-            "💡 Save your game often with Ctrl+S!",
-            "💡 Use groups to organize parts together!",
-            "💡 The rotate tool helps make stairs and ramps!",
-            "💡 Try different materials like wood, metal, and grass!",
-            "💡 Lighting can change the whole mood of your game!",
-            "💡 Add a waiting lobby for multiplayer games!",
-            "💡 Use transparent parts to create invisible walls!",
-            "💡 Anchor parts that shouldn't fall (check Anchored in Properties)!",
-            "💡 Play other people's games to get ideas!",
-            "💡 Ask friends to test your game and give feedback!"
-        ];
-
-        // Scripting help
-        const scriptingHelp = {
-            basic: "📜 Lua scripting basics for Roblox:\n\n-- This is a comment\nprint('Hello!') -- Shows message in output\n\nwait(1) -- Waits 1 second\n\nwhile true do\n    -- Code here repeats forever\n    wait(0.1)\nend\n\nVariables:\nlocal myNumber = 10\nlocal myText = 'Hello'\nlocal myPart = game.Workspace.Part\n\nStart with simple print statements to learn!",
-            
-            beginner: "🎯 Easy script examples:\n\n1. Make part disappear when touched:\nscript.Parent.Touched:Connect(function()\n    script.Parent.Transparency = 1\nend)\n\n2. Change color every second:\nwhile true do\n    script.Parent.BrickColor = BrickColor.Random()\n    wait(1)\nend\n\n3. Make part glow:\nlocal light = Instance.new('PointLight')\nlight.Parent = script.Parent\nlight.Brightness = 5\n\nCopy these and try them!",
-            
-            variables: "📦 Variables store information!\n\nThink of variables like boxes that hold things:\n\nlocal score = 0  -- Box holding a number\nlocal playerName = 'Alex'  -- Box holding text\nlocal isGameActive = true  -- Box holding true/false\n\nYou can change what's in the box:\nscore = score + 10  -- Add 10 to score\nplayerName = 'Sam'  -- Change the name\n\nUse 'local' to create new boxes!",
-            
-            functions: "🎪 Functions are like recipes - they do a specific job!\n\nlocal function sayHello()\n    print('Hello!')\nend\n\nsayHello()  -- This runs the function\n\nFunctions with inputs:\nlocal function addNumbers(a, b)\n    return a + b\nend\n\nlocal result = addNumbers(5, 3)  -- result is 8\n\nFunctions help organize your code!",
-            
-            events: "⚡ Events happen when something occurs!\n\nTouched Event (when something touches a part):\nscript.Parent.Touched:Connect(function(hit)\n    print('Something touched me!')\nend)\n\nClick Event (when player clicks):\nscript.Parent.ClickDetector.MouseClick:Connect(function()\n    print('Player clicked me!')\nend)\n\nEvents make your game interactive!",
-            
-            loops: "🔄 Loops repeat code!\n\nWhile loop (repeats while true):\nwhile true do\n    print('Forever!')\n    wait(1)\nend\n\nFor loop (repeats specific times):\nfor i = 1, 10 do\n    print('Count:', i)\nend\n\nFor loop through list:\nfor i, player in pairs(game.Players:GetPlayers()) do\n    print(player.Name)\nend\n\nLoops are super useful!"
-        };
-
-        // Building techniques
-        const buildingTips = {
-            basic: "🏗️ Basic building tips:\n\n1. Start with large parts, add details later\n2. Use the grid (View → Show Grid) for alignment\n3. Group parts: Ctrl+G to move them together\n4. Duplicate with Ctrl+D for faster building\n5. Use snap to grid for neat buildings\n6. Try different materials for variety\n7. Add details like windows and doors last\n\nPractice makes perfect!",
-            
-            terrain: "🏔️ Using Terrain:\n\n1. Home tab → Editor → Edit\n2. Choose Generate for instant terrain\n3. Use Grow tool to add terrain\n4. Use Erode tool to remove terrain\n5. Paint tool changes terrain type\n6. Try grass, sand, rock, snow!\n7. Make mountains, valleys, and islands\n\nTerrain makes natural-looking environments!",
-            
-            detail: "✨ Adding cool details:\n\n1. Use different sized parts for variety\n2. Add Decals for pictures on walls\n3. Use PointLights to make things glow\n4. Add Smoke or Fire effects\n5. Try different materials (wood, metal, etc)\n6. Use thin parts as decorations\n7. Add plants from toolbox!\n\nDetails make your game special!",
-            
-            organizing: "📁 Organizing your game:\n\n1. Use Folders in workspace\n2. Name everything clearly\n3. Group related parts together\n4. Put scripts in ServerScriptService\n5. Keep assets in ReplicatedStorage\n6. Use Teams for team games\n7. Comment your scripts!\n\nGood organization helps you find things!",
-            
-            models: "🎁 Using the Toolbox:\n\n1. Click View → Toolbox\n2. Search for what you need\n3. Click to insert into game\n4. Check scripts before using!\n5. Customize models with your colors\n6. Some models may have viruses - be careful!\n7. You can make your own models too!\n\nToolbox has tons of free stuff!",
-            
-            advanced: "🚀 Advanced building:\n\n1. Use CSGUnion to combine parts\n2. Use CSGSubtract to cut holes\n3. Try using CFrames for rotation\n4. Use TweenService for smooth movement\n5. Create custom shapes with unions\n6. Use constraints for physics\n7. Try path generation for AI\n\nThese are pro techniques!"
-        };
-
-        const quickSuggestions = [
-            "Game ideas",
-            "How to start",
-            "Scripting help",
-            "Building tips",
-            "Make it fun",
-            "Random idea"
-        ];
-
-        // Initialize
-        addMessage('bot', '👋 Hi! I\'m your Roblox Studio helper! I can help you with:\n\n🎮 Game ideas for any genre\n🔧 How to use Roblox Studio\n📜 Scripting and coding help\n🏗️ Building techniques\n💡 Tips and tricks\n\nWhat would you like to know?');
-        showSuggestions();
-
-        function showSuggestions() {
-            suggestionsDiv.innerHTML = '';
-            quickSuggestions.forEach(suggestion => {
-                const btn = document.createElement('button');
-                btn.className = 'suggestion-btn';
-                btn.textContent = suggestion;
-                btn.onclick = () => {
-                    userInput.value = suggestion;
-                    sendMessage();
-                };
-                suggestionsDiv.appendChild(btn);
-            });
-        }
-
-        function addMessage(type, text) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${type}-message`;
-            messageDiv.textContent = text;
-            messagesDiv.appendChild(messageDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
-        function handleKeyPress(event) {
-            if (event.key === 'Enter' && !sendBtn.disabled) {
-                sendMessage();
-            }
-        }
-
-        function getRandomItem(array) {
-            return array[Math.floor(Math.random() * array.length)];
-        }
-
-        function containsAny(text, keywords) {
-            return keywords.some(keyword => text.includes(keyword));
-        }
-
-        function generateResponse(message) {
-            const lowerMessage = message.toLowerCase();
-
-            // Greetings
-            if (containsAny(lowerMessage, ['hello', 'hi', 'hey', 'sup', 'yo'])) {
-                return "👋 Hey there! I'm super excited to help you with Roblox Studio! What would you like to know about? I can help with game ideas, building, scripting, or just general tips!";
-            }
-
-            // Thanks
-            if (containsAny(lowerMessage, ['thank', 'thanks', 'thx', 'ty'])) {
-                return "😊 You're welcome! I'm always here to help! Have fun building your awesome game! Let me know if you need anything else!";
-            }
-
-            // Goodbye
-            if (containsAny(lowerMessage, ['bye', 'goodbye', 'see you', 'cya', 'later'])) {
-                return "👋 Goodbye! Have an amazing time creating your game! Come back anytime you need help. Happy building! 🎮";
-            }
-
-            // How are you
-            if (containsAny(lowerMessage, ['how are you', 'whats up', 'what\'s up'])) {
-                return "I'm doing great! 😊 I'm excited to help you make awesome Roblox games! What are you working on today?";
-            }
-
-            // HOW TO questions
-            if (containsAny(lowerMessage, ['how to start', 'how do i start', 'getting started', 'begin', 'first time'])) {
-                return howToGuides.start;
-            }
-            if (containsAny(lowerMessage, ['how to add part', 'how to make part', 'how to place', 'create part'])) {
-                return howToGuides.parts;
-            }
-            if (containsAny(lowerMessage, ['how to script', 'how to code', 'add script', 'make script', 'scripting'])) {
-                return howToGuides.script;
-            }
-            if (containsAny(lowerMessage, ['how to color', 'change color', 'how to paint', 'make it colorful'])) {
-                return howToGuides.colors;
-            }
-            if (containsAny(lowerMessage, ['how to test', 'how to play', 'test game', 'try my game'])) {
-                return howToGuides.testing;
-            }
-            if (containsAny(lowerMessage, ['how to publish', 'upload game', 'share game', 'make it public'])) {
-                return howToGuides.publish;
-            }
-            if (containsAny(lowerMessage, ['how to move', 'make it move', 'movement', 'animate'])) {
-                return howToGuides.movement;
-            }
-            if (containsAny(lowerMessage, ['how to teleport', 'make teleporter', 'teleportation'])) {
-                return howToGuides.teleport;
-            }
-            if (containsAny(lowerMessage, ['how to make coins', 'collectible', 'pickup', 'collect'])) {
-                return howToGuides.coins;
-            }
-            if (containsAny(lowerMessage, ['how to add sound', 'how to add music', 'sound', 'audio', 'music'])) {
-                return howToGuides.sounds;
-            }
-            if (containsAny(lowerMessage, ['how to make gui', 'how to make menu', 'buttons', 'interface', 'ui'])) {
-                return howToGuides.gui;
-            }
-            if (containsAny(lowerMessage, ['how to change lighting', 'make it dark', 'make it bright', 'day night'])) {
-                return howToGuides.lighting;
-            }
-            if (containsAny(lowerMessage, ['how to spawn', 'spawn point', 'where players start', 'respawn'])) {
-                return howToGuides.spawn;
-            }
-
-            // SCRIPTING questions
-            if (containsAny(lowerMessage, ['learn lua', 'lua basics', 'scripting basics', 'coding basics'])) {
-                return scriptingHelp.basic;
-            }
-            if (containsAny(lowerMessage, ['easy script', 'simple script', 'beginner script', 'first script'])) {
-                return scriptingHelp.beginner;
-            }
-            if (containsAny(lowerMessage, ['what are variables', 'how do variables', 'variable'])) {
-                return scriptingHelp.variables;
-            }
-            if (containsAny(lowerMessage, ['what are functions', 'how do functions', 'function'])) {
-                return scriptingHelp.functions;
-            }
-            if (containsAny(lowerMessage, ['what are events', 'how do events', 'event', 'touched'])) {
-                return scriptingHelp.events;
-            }
-            if (containsAny(lowerMessage, ['what are loops', 'how do loops', 'loop', 'while', 'for loop'])) {
-                return scriptingHelp.loops;
-            }
-
-            // BUILDING questions
-            if (containsAny(lowerMessage, ['building tips', 'building help', 'how to build', 'build better'])) {
-                return buildingTips.basic;
-            }
-            if (containsAny(lowerMessage, ['terrain', 'mountains', 'hills', 'landscape'])) {
-                return buildingTips.terrain;
-            }
-            if (containsAny(lowerMessage, ['add details', 'make it look good', 'decoration', 'decorate'])) {
-                return buildingTips.detail;
-            }
-            if (containsAny(lowerMessage, ['organize', 'organization', 'clean up', 'messy'])) {
-                return buildingTips.organizing;
-            }
-            if (containsAny(lowerMessage, ['toolbox', 'free models', 'assets', 'download'])) {
-                return buildingTips.models;
-            }
-            if (containsAny(lowerMessage, ['advanced', 'pro tips', 'expert'])) {
-                return buildingTips.advanced;
-            }
-
-            // GAME IDEAS by type
-            if (containsAny(lowerMessage, ['obby', 'obstacle'])) {
-                return getRandomItem(gameIdeas.obby);
-            }
-            if (containsAny(lowerMessage, ['simulator', 'sim', 'clicking'])) {
-                return getRandomItem(gameIdeas.simulator);
-            }
-            if (containsAny(lowerMessage, ['adventure', 'explore', 'quest'])) {
-                return getRandomItem(gameIdeas.adventure);
-            }
-            if (containsAny(lowerMessage, ['race', 'racing', 'car', 'speed'])) {
-                return getRandomItem(gameIdeas.racing);
-            }
-            if (containsAny(lowerMessage, ['tycoon', 'build', 'grow', 'business'])) {
-                return getRandomItem(gameIdeas.tycoon);
-            }
-            if (containsAny(lowerMessage, ['roleplay', 'rp', 'life'])) {
-                return getRandomItem(gameIdeas.roleplay);
-            }
-            if (containsAny(lowerMessage, ['tower defense', 'defense', 'defend', 'tower'])) {
-                return getRandomItem(gameIdeas.tower_defense);
-            }
-            if (containsAny(lowerMessage, ['scary', 'horror', 'spooky', 'creepy'])) {
-                return getRandomItem(gameIdeas.horror_light);
-            }
-            if (containsAny(lowerMessage, ['fighting', 'battle', 'combat', 'pvp', 'fight'])) {
-                return getRandomItem(gameIdeas.fighting);
-            }
-            if (containsAny(lowerMessage, ['puzzle', 'brain', 'riddle', 'mystery'])) {
-                return getRandomItem(gameIdeas.puzzle);
-            }
-            if (containsAny(lowerMessage, ['survival', 'survive', 'island'])) {
-                return getRandomItem(gameIdeas.survival);
-            }
-
-            // General game questions
-            if (containsAny(lowerMessage, ['game idea', 'game ideas', 'what game', 'what should i make', 'give me idea'])) {
-                const allIdeas = [...gameIdeas.obby, ...gameIdeas.simulator, ...gameIdeas.adventure, 
-                                 ...gameIdeas.racing, ...gameIdeas.tycoon, ...gameIdeas.roleplay,
-                                 ...gameIdeas.tower_defense, ...gameIdeas.fighting, ...gameIdeas.puzzle];
-                return getRandomItem(allIdeas);
-            }
-
-            if (containsAny(lowerMessage, ['make fun', 'make it better', 'improve', 'make it good'])) {
-                return "🎮 Here's how to make your game more fun:\n\n1. Add music and sound effects\n2. Give players goals or quests\n3. Add unlockables and achievements\n4. Make it colorful and exciting\n5. Add rewards for playing\n6. Test it with friends\n7. Add Easter eggs and secrets\n8. Make controls smooth\n9. Add a tutorial for new players\n10. Keep updating with new content!\n\nThe most important thing: make something YOU would want to play!";
-            }
-
-            if (containsAny(lowerMessage, ['tip', 'tips', 'advice', 'help', 'stuck'])) {
-                return getRandomItem(tips);
-            }
-
-            if (containsAny(lowerMessage, ['popular', 'trending', 'most played', 'best games'])) {
-                return "🔥 Popular game types on Roblox right now:\n\n1. Simulators (pet, clicking, training)\n2. Obbys (obstacle courses)\n3. Roleplay games (school, city, house)\n4. Tycoons (building empires)\n5. Tower Defense\n6. Fighting/Battle games\n7. Racing games\n8. Horror/Mystery games\n9. Survival games\n10. Adventure quests\n\nBut remember - make what YOU think is fun! Original ideas can become super popular too!";
-            }
-
-            if (containsAny(lowerMessage, ['difficulty', 'hard', 'easy', 'level'])) {
-                return "⚖️ Balancing game difficulty:\n\n🟢 Easy: For beginners\n- Clear instructions\n- Generous checkpoints\n- Simple controls\n- Lots of help\n\n🟡 Medium: Main game\n- Some challenge\n- Fair obstacles\n- Learnable patterns\n- Occasional tough spots\n\n🔴 Hard: For experts\n- Real challenges\n- Fewer checkpoints\n- Requires skill\n- Feels rewarding!\n\nTip: Start easy and get harder gradually. Test with friends!";
-            }
-
-            if (containsAny(lowerMessage, ['multiplayer', 'friends', 'players', 'co-op', 'together'])) {
-                return "👥 Making multiplayer games:\n\n1. Add spawn points for all players\n2. Use Teams for team games\n3. Add player name tags\n4. Create leaderboards\n5. Make sure enough space for everyone\n6. Add chat commands\n7. Consider co-op challenges\n8. Add player vs player options\n9. Make it fun solo too!\n10. Test with friends!\n\nMultiplayer games are more fun to play with friends!";
-            }
-
-            if (containsAny(lowerMessage, ['money', 'coins', 'currency', 'shop', 'store'])) {
-                return "💰 Adding currency/shop system:\n\n1. Use Leaderstats to show money\n2. Give money for completing tasks\n3. Create a shop GUI\n4. Add items to buy (power-ups, cosmetics)\n5. Use IntValues to track money\n6. Save money with DataStore\n7. Make earning money fun!\n8. Add daily rewards\n9. Don't make it too grindy\n10. Test the economy!\n\nMoney systems make players want to keep playing!";
-            }
-
-            if (containsAny(lowerMessage, ['animation', 'animate', 'move characters', 'make them move'])) {
-                return "🎭 Adding animations:\n\n1. Use Roblox Animation Editor (Plugins)\n2. Create keyframes for movement\n3. Save animation and get ID\n4. Load in script: local anim = humanoid:LoadAnimation(animation)\n5. Play it: anim:Play()\n6. Adjust speed: anim:AdjustSpeed(2)\n7. Stop it: anim:Stop()\n\nAnimations make characters come alive! Try walking, jumping, and dancing animations first!";
-            }
-
-            if (containsAny(lowerMessage, ['mobile', 'phone', 'tablet', 'touch'])) {
-                return "📱 Making games mobile-friendly:\n\n1. Add touch controls (on-screen buttons)\n2. Make UI bigger for easy tapping\n3. Test on mobile (Device Emulator)\n4. Use UserInputService for touch detection\n5. Don't use keyboard-only controls\n6. Keep it simple\n7. Optimize for lower performance\n8. Test button sizes!\n\nMany Roblox players use mobile!";
-            }
-
-            // Random idea
-            if (containsAny(lowerMessage, ['random', 'surprise', 'anything'])) {
-                const categories = Object.keys(gameIdeas);
-                const randomCategory = categories[Math.floor(Math.random() * categories.length)];
-                return "🎲 Here's a random idea for you!\n\n" + getRandomItem(gameIdeas[randomCategory]);
-            }
-
-            // What is Roblox Studio
-            if (containsAny(lowerMessage, ['what is roblox studio', 'what is studio', 'tell me about'])) {
-                return "🎮 Roblox Studio is a FREE program where you can create your own Roblox games!\n\nYou can:\n✨ Build 3D worlds\n📝 Write code (Lua programming)\n🎨 Design characters and objects\n🎵 Add sounds and music\n🎮 Make any game you imagine!\n\nIt's like having your own game development studio! Millions of people use it to make games. Download it from roblox.com!";
-            }
-
-            // What can I make
-            if (containsAny(lowerMessage, ['what can i make', 'what can i create', 'possibilities'])) {
-                return "🌟 You can make ANYTHING in Roblox Studio!\n\nPopular types:\n🏃 Obbys & parkour\n🎮 Simulators\n🏰 Adventures & RPGs\n🏎️ Racing games\n🏗️ Tycoons\n🎭 Roleplay\n⚔️ Fighting games\n🧩 Puzzles\n🌍 Survival\n🎪 Mini-games\n\nAnd much more! If you can imagine it, you can build it! What sounds fun to you?";
-            }
-
-            // Encouragement
-            if (containsAny(lowerMessage, ['give up', 'too hard', 'can\'t do', 'impossible', 'difficult'])) {
-                return "💪 Don't give up! Every expert was once a beginner!\n\n🌟 Remember:\n- Start with small, simple projects\n- Watch tutorials when stuck\n- Ask for help (that's what I'm here for!)\n- Practice makes perfect\n- Even simple games can be fun\n- Take breaks when frustrated\n- Celebrate small wins!\n\nYou've got this! What part is giving you trouble? I can help!";
-            }
-
-            // Default - general helpful response
-            return "🤔 I'm not sure about that specific question, but I can help you with:\n\n💡 Game ideas (obby, simulator, racing, adventure, etc.)\n🔧 How to use Roblox Studio tools\n📜 Scripting and coding help\n🏗️ Building techniques\n💎 Making your game fun\n🎮 Testing and publishing\n\nWhat would you like to know more about?";
-        }
-
-        async function sendMessage() {
-            const message = userInput.value.trim();
-            if (!message) return;
-
-            // Disable input while processing
-            userInput.disabled = true;
-            sendBtn.disabled = true;
-            typingIndicator.classList.add('active');
-
-            // Add user message
-            addMessage('user', message);
-            userInput.value = '';
-
-            // Simulate thinking time
-            await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000));
-
-            // Generate response
-            const response = generateResponse(message);
-            addMessage('bot', response);
-
-            // Re-enable input
-            typingIndicator.classList.remove('active');
-            userInput.disabled = false;
-            sendBtn.disabled = false;
-            userInput.focus();
-        }
-    </script>
-</body>
-</html>
+                "🏝️ **STRANDED ISLAND SURVIVAL**: Ultimate island challenge!\n• Start with nothing on deserted island\n• Gather resources: wood, stone, fruit\n• Craft tools and weapons\n• Build shelter from storms\n• Hunt animals and fish\n• Fresh water management\n• Explore island for secrets\n• Signal fire for rescue\n• Day/night survival cycle\n• Weather survival challenges",
+                
+                "❄️ **ARCTIC SURVIVAL**: Frozen wilderness!\n• Temperature management critical\n• Build igloo shelters\n• Ice fishing for food\n• Craft warm clothing\n• Blizzard survival\n• Polar bear encounters\n• Northern lights navigation\n• Limited daylight planning\n• Frozen lake dangers\n• Rescue mission goal",
+                
+                "🌋 **VOLCANO ISLAND ESCAPE**: Race against eruption!\n• Island volcano is erupting!\n• Build raft to escape\n• Gather supplies while lava flows\n• Evacuate with friends (co-op)\n• Timed survival\n• Rescue animals too\n• Hot zones to avoid\n• Earthquake events\n• Ash cloud visibility\n• Epic escape sequence",
+                
+                "🌵 **DESERT SURVIVAL**: Extreme heat challenge!\n• Find oasis for water\n• Build shade shelters\n• Cacti provide resources\n• Sandstorms hit randomly\n• Scorpion and snake dangers\n• Camel companion\n• Mirages confuse navigation\n• Night is freezing cold\n• Ancient ruins shelter\n• Rescue caravan arrives eventually",
+                
+                "🌲 **WILDERNESS CAMPING**: Forest survival!\n• Set up camp site\n• Gather firewood and kindling\n• Cook food on campfire\n• Pitch tent before dark\n• Wildlife encounters\n• Hiking for resources\n• Stream for fresh water\n• Storm preparation\n• S'mores mini-game\n• Nature photography spots",
+                
+                "🏚️ **ABANDONED CITY**: Urban survival!\n• Scavenge buildings for supplies\n• Avoid hazards and dangers\n• Build safe zone base\n• Limited resources\n• Other survivors to help\n• Grow food in gardens\n• Defend from threats\n• Explore different districts\n• Vehicle restoration\n• Community rebuilding",
+                
+                "🌊 **OCEAN RAFT SURVIVAL**: Lost at sea!\n• Expand raft with debris\n• Catch fish for food\n• Collect rainwater\n• Shark circle the raft\n• Island hopping\n• Craft better equipment\n• Weather the storms\n• Navigation by stars\n• Whale encounters\n• Find inhabited island",
+                
+                "🏔️ **MOUNTAIN EXPEDITION**: Alpine
             
