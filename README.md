@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roblox AI Helper</title>
+    <title>Roblox Game Idea Generator</title>
     <style>
         * {
             margin: 0;
@@ -194,21 +194,21 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎮 Roblox AI Helper</h1>
-            <p>Ask me anything about Roblox, games, or life!</p>
+            <h1>🎮 Roblox Game Idea Generator</h1>
+            <p>Get unlimited creative game ideas for Roblox Studio!</p>
         </div>
 
         <div class="chat-container">
             <div class="messages" id="messages"></div>
-            <div class="typing-indicator" id="typingIndicator">Thinking...</div>
+            <div class="typing-indicator" id="typingIndicator">Generating idea...</div>
             <div class="suggestions" id="suggestions"></div>
             <div class="input-area">
                 <input 
                     type="text" 
                     id="userInput" 
-                    placeholder="Ask me anything..."
+                    placeholder="What type of Roblox game do you want to make?"
                 >
-                <button id="sendBtn">Send</button>
+                <button id="sendBtn">Get Idea</button>
             </div>
         </div>
     </div>
@@ -220,166 +220,62 @@
         const typingIndicator = document.getElementById('typingIndicator');
         const suggestionsDiv = document.getElementById('suggestions');
 
-        const gameIdeas = [
-            "🏃 SPEED OBBY: Race through moving platforms, boost pads, and secret shortcuts! Add a leaderboard for fastest times.",
-            "🍕 PIZZA SIMULATOR: Run your own pizza shop! Make pizzas, serve customers, and upgrade your restaurant.",
-            "🏰 CASTLE ADVENTURE: Explore a magical castle with quests, hidden rooms, and a friendly dragon boss!",
-            "🏎️ RACING GAME: Build awesome race tracks with loops, jumps, and power-ups like speed boosts!",
-            "🐾 PET COLLECTOR: Collect and train 100+ pets! Build pet homes and compete in pet races.",
-            "🗺️ TREASURE HUNT: Create a huge map with hidden treasures, puzzles, and mysterious caves!",
-            "🏪 SHOP TYCOON: Start with a small shop and grow it into a huge mall empire!",
-            "⚔️ SWORD FIGHTER: Battle with different swords, unlock cool armor, and fight bosses!",
-            "🌈 RAINBOW OBBY: Each level is a different color with unique obstacles and challenges!",
-            "🚀 SPACE EXPLORER: Journey through space, visit planets, and discover alien friends!"
-        ];
+        // HUGE database of Roblox game ideas (100+ ideas!)
+        const gameIdeas = {
+            obby: [
+                "🏃 **SPEED RUNNER OBBY**: Ultimate racing obby!\n• Moving platforms that speed up\n• Boost pads and slow zones\n• Checkpoints every 10 obstacles\n• Difficulties: Easy, Medium, Hard, INSANE\n• Leaderboard for fastest times\n• Secret shortcuts for pros\n• Rainbow trail when you finish\n• Speed multipliers as you progress",
+                
+                "🌈 **RAINBOW COLOR OBBY**: Each level = different color!\n• RED Level: Fire obstacles, lava jumps, heat damage\n• BLUE Level: Slippery ice platforms, frozen sections\n• GREEN Level: Nature vines, leaf platforms, tree jumping\n• YELLOW Level: Lightning strikes, electric barriers\n• PURPLE Level: Gravity flip zones, upside-down sections\n• ORANGE Level: Bouncy platforms, trampoline zones\n• Mix all colors for final boss level",
+                
+                "🚀 **SPACE OBBY ADVENTURE**: Journey through the galaxy!\n• Start on Earth, end at Black Hole\n• Zero gravity floating sections\n• Jump between asteroids\n• Rocket booster power-ups\n• Alien NPCs give hints and checkpoints\n• Collect stars for space shop\n• Unlock spaceship skins and trails\n• Planet-themed levels (Mars, Jupiter, Saturn)\n• Meteor dodge sections",
+                
+                "🏰 **MEDIEVAL CASTLE OBBY**: Climb the tower!\n• Start in dungeon, escape to rooftop\n• Swinging axes and arrow traps\n• Moving stone platforms\n• Knight NPCs patrol and give quests\n• Dragon race at the top (friendly!)\n• Collect gold coins for medieval shop\n• Unlock armor skins and sword trails\n• Secret treasure rooms\n• Castle courtyard parkour section",
+                
+                "🌊 **UNDERWATER OCEAN OBBY**: Deep sea adventure!\n• 50 levels from surface to ocean floor\n• Swimming mechanics with oxygen bubbles\n• Avoid sharks, jellyfish, whirlpools\n• Beautiful coral reef sections\n• Shipwreck exploration\n• Submarine checkpoints\n• Collect pearls for sea shop\n• Unlock sea creature pets\n• Bioluminescent night levels",
+                
+                "🎪 **CIRCUS SPECTACULAR OBBY**: Greatest show!\n• Tightrope walking sections\n• Cannon launchers between platforms\n• Trampoline bounce zones\n• Spinning circus wheels\n• Dodge juggling balls\n• Clown NPCs cheer you on\n• Unlock circus outfits and confetti effects\n• Trapeze swing sections\n• Funhouse mirror maze level"
+            ],
 
-        const answers = {
-            'sky blue': 'The sky is blue because of something called Rayleigh scattering! Sunlight hits air molecules, and blue light scatters more than other colors. That\'s why we see blue everywhere!',
-            'planes fly': 'Planes fly because of lift! Wings are shaped so air moves faster over the top, creating lower pressure. This lifts the plane up while engines push it forward!',
-            'gravity': 'Gravity is a force that pulls objects together! Earth\'s gravity keeps us on the ground. Everything with mass has gravity - even you!',
-            'fastest animal': 'The cheetah is fastest on land at 70 mph! But the peregrine falcon can dive at 240+ mph, making it the fastest animal overall!',
-            'biggest animal': 'The blue whale is the biggest animal ever - even bigger than dinosaurs! They can be 100 feet long and weigh 200 tons!',
-            'pandas eat': 'Pandas eat bamboo - about 26 to 84 pounds every day! They spend 12-16 hours a day eating. Bamboo is basically their whole diet!',
-            'make friends': 'Tips for making friends:\n1. Be yourself\n2. Show interest in others\n3. Join activities you enjoy\n4. Be kind and positive\n5. Don\'t force it - friendships take time!',
-            'study better': 'Study tips:\n1. Remove distractions\n2. Take breaks every 25 minutes\n3. Teach someone else what you learned\n4. Use flashcards\n5. Get enough sleep!',
-            'planets': 'There are 8 planets: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, and Neptune! Pluto is now a dwarf planet.',
-            'black hole': 'A black hole is where gravity is SO strong that nothing can escape - not even light! They form when massive stars collapse.'
-        };
+            simulator: [
+                "🐾 **MEGA PET SIMULATOR**: Ultimate pet collection!\n• Collect 100+ unique pets (common to mythical)\n• 3-stage pet evolution system\n• Build and decorate custom pet homes\n• Mini-games: fetch, agility course, pet races\n• Breeding system for rare combinations\n• Pet abilities (some find coins faster, others XP boost)\n• Daily pet care: feeding, bathing, playing\n• Trading system with other players\n• Pet accessories shop: hats, wings, trails\n• Legendary pets with special powers",
+                
+                "🍕 **PIZZA EMPIRE TYCOON**: Restaurant empire!\n• Start with tiny pizza stand\n• 50+ toppings to unlock\n• Hire chefs, delivery drivers, cashiers\n• Upgrade ovens for faster cooking\n• Expand to multiple restaurants\n• Custom pizza creator\n• Delivery mini-game (drive to houses)\n• Pizza-making contests\n• Unlock food truck\n• Catering business expansion",
+                
+                "⚔️ **SWORD MASTER SIMULATOR**: Legendary warrior!\n• Collect 200+ legendary swords\n• Train stats: Strength, Speed, Defense, Magic\n• Battle training dummies for XP\n• Quest system from village NPCs\n• Dungeon raids with epic bosses\n• Forge new swords from materials\n• Enchantment system for powers\n• PvP arena battles\n• Unlock armor sets and capes\n• Special sword combos and abilities",
+                
+                "🏝️ **ISLAND EMPIRE BUILDER**: Build paradise!\n• Start on tiny island, expand by buying land\n• Plant crops: wheat, corn, fruits, palm trees\n• Build houses, shops, parks, beaches\n• Attract tourists for income\n• Unlock new islands (volcanic, tropical, arctic)\n• Fishing and treasure hunting mini-games\n• Hire workers to automate tasks\n• Weather affects crops\n• Build bridges between islands",
+                
+                "🧙 **MAGIC ACADEMY SIMULATOR**: Master magic!\n• Learn 50+ spells across 5 schools\n• Attend classes: Potions, Charms, Transfiguration, Defense\n• Collect wands with different powers\n• Familiar pets boost magic abilities\n• Complete homework quests for XP\n• Wizard duels with other students\n• Unlock powerful spell combinations\n• Explore secret castle chambers\n• House system with competitions",
+                
+                "💎 **MINING TYCOON**: Dig for riches!\n• Mine gems from underground caves\n• 50+ gem types (ruby, diamond, emerald, mythical)\n• Upgrade pickaxe, drill, dynamite\n• Hire miners for auto-mining\n• Sell gems or craft jewelry\n• Unlock new locations: volcano, ice cave, crystal cavern\n• Discover ancient artifacts\n• Prestige system for rebirth bonuses\n• Build gem shop empire"
+            ],
 
-        const jokes = [
-            "Why don't scientists trust atoms? Because they make up everything! 😄",
-            "What do you call a bear with no teeth? A gummy bear! 🐻",
-            "Why did the bicycle fall over? It was two-tired! 🚲",
-            "What do you call a fake noodle? An impasta! 🍝",
-            "What did the ocean say to the beach? Nothing, it just waved! 🌊"
-        ];
+            adventure: [
+                "🗺️ **TREASURE ISLAND QUEST**: Ultimate treasure hunt!\n• Massive island map with 20+ locations\n• Find treasure map pieces\n• Solve riddles and puzzles\n• Explore mysterious caves and temples\n• Dodge ancient traps: arrows, rolling boulders\n• Boss battle: Ancient Guardian\n• Hidden treasure rooms with rare loot\n• Map reveals as you explore\n• Collect artifacts for rewards\n• Secret underwater cave",
+                
+                "🏰 **KINGDOM QUEST RPG**: Save the realm!\n• Create character: Knight, Wizard, Archer, Rogue\n• 30+ quests from different NPCs\n• Battle system with skills and combos\n• Explore forests, caves, villages, castles\n• Collect weapons, armor, potions\n• Level up system (1-50)\n• Final boss: Dark Sorcerer in tower\n• Side quests for legendary items\n• Party system (play with friends)",
+                
+                "🌲 **ENCHANTED FOREST**: Magical journey!\n• Meet mystical creatures: fairies, unicorns, talking trees\n• 15 different forest zones\n• Gather magical berries and herbs\n• Craft potions and spells\n• Animal companion system\n• Build treehouse hideout\n• Seasonal events (spring flowers, autumn leaves)\n• Mystery: Why is forest magic fading?\n• Restore magic through quests",
+                
+                "🏴‍☠️ **PIRATE ADVENTURE**: Sail the seas!\n• Captain your own pirate ship\n• Visit 10 different islands\n• Treasure maps lead to buried gold\n• Naval battles with enemy pirates\n• Recruit crew members\n• Upgrade ship: cannons, sails, hull\n• Sea monster encounters (kraken!)\n• Trade goods between ports\n• Legendary treasure finale",
+                
+                "🏔️ **MOUNTAIN EXPEDITION**: Climb the peak!\n• Multi-day journey with camps\n• Survival: warmth, energy, hunger\n• Beautiful scenic viewpoints\n• Weather challenges: storms, avalanches\n• Wildlife: eagles, mountain goats\n• Upgrade climbing gear\n• Photograph rare sights\n• Secret cave systems\n• Plant flag at summit"
+            ],
 
-        const suggestions = [
-            "Game idea",
-            "Tell me a joke",
-            "Why is the sky blue?",
-            "How do I make friends?",
-            "Fun fact",
-            "Study tips"
-        ];
+            racing: [
+                "🏎️ **TURBO KART RACING**: Ultimate kart championship!\n• 20 unique tracks: city, beach, volcano, space, jungle\n• 50+ karts to collect and unlock\n• Power-ups: rocket boost, shield, oil slick, lightning\n• Customize: paint, decals, wheels, spoilers, neon lights\n• Championship mode (10 races, points system)\n• Time trial with ghost racers\n• Multiplayer races (8 players)\n• Drift mechanics for sharp turns\n• Secret shortcuts on each track\n• Unlock legendary karts",
+                
+                "🛹 **SKATE PARK PRO**: Extreme skating!\n• Massive skate park with 10 sections\n• Trick system: kickflip, ollie, grind, manual, heelflip\n• Combo multiplier (chain tricks)\n• Collect S-K-A-T-E letters\n• Create custom skate parks\n• Unlock 30+ boards and styles\n• Sponsored challenges\n• Competitions with rankings\n• Film mode (record runs)\n• Street skating in city",
+                
+                "🏁 **DRAG RACING LEGENDS**: Quarter mile!\n• Reaction time perfect launch\n• Gear shift timing mechanics\n• Nitrous oxide boost button\n• Tune cars: engine, tires, transmission, weight\n• 40+ cars from different eras\n• Underground racing story mode\n• Pink slip races (winner takes car)\n• Custom wraps and underglow\n• Dyno shop performance testing",
+                
+                "🚁 **AIR RACE EXTREME**: Sky racing!\n• Helicopters, planes, jets\n• Ring checkpoint courses through clouds\n• Barrel rolls and loop-de-loops\n• Weather challenges: storms, wind\n• 15 aircraft to unlock\n• Canyon racing (tight spaces!)\n• Stunt challenges\n• Dogfight race mode\n• Unlock legendary aircraft"
+            ],
 
-        // Show initial message
-        addMessage('bot', '👋 Hey! I\'m your AI helper! I can help with:\n\n🎮 Roblox game ideas\n🔬 Science questions\n😂 Jokes and fun facts\n📚 Study and life advice\n\nWhat would you like to know?');
-        showSuggestions();
-
-        function showSuggestions() {
-            suggestionsDiv.innerHTML = '';
-            suggestions.forEach(sug => {
-                const btn = document.createElement('button');
-                btn.className = 'suggestion-btn';
-                btn.textContent = sug;
-                btn.onclick = function() {
-                    userInput.value = sug;
-                    sendMessage();
-                };
-                suggestionsDiv.appendChild(btn);
-            });
-        }
-
-        function addMessage(type, text) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'message ' + type + '-message';
-            messageDiv.textContent = text;
-            messagesDiv.appendChild(messageDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
-        function getRandomItem(array) {
-            return array[Math.floor(Math.random() * array.length)];
-        }
-
-        function generateResponse(message) {
-            const lower = message.toLowerCase();
-
-            // Greetings
-            if (lower.includes('hello') || lower.includes('hi') || lower.includes('hey')) {
-                return "👋 Hey there! What can I help you with today?";
-            }
-
-            // Thanks
-            if (lower.includes('thank')) {
-                return "😊 You're welcome! Happy to help anytime!";
-            }
-
-            // Jokes
-            if (lower.includes('joke') || lower.includes('funny')) {
-                return getRandomItem(jokes);
-            }
-
-            // Game ideas
-            if (lower.includes('game') || lower.includes('idea') || lower.includes('obby') || lower.includes('simulator') || lower.includes('roblox')) {
-                return getRandomItem(gameIdeas);
-            }
-
-            // Math
-            if (lower.match(/\d+\s*[\+\-\*\/]\s*\d+/)) {
-                try {
-                    const result = eval(lower.replace(/[^0-9+\-*/().]/g, ''));
-                    return '🧮 ' + lower + ' = ' + result;
-                } catch(e) {
-                    // continue to other checks
-                }
-            }
-
-            // Check answers database
-            for (let key in answers) {
-                if (lower.includes(key)) {
-                    return answers[key];
-                }
-            }
-
-            // Fun facts
-            if (lower.includes('fun fact') || lower.includes('fact')) {
-                const facts = [
-                    "🦈 Sharks are older than trees! They've been around for 400 million years!",
-                    "🍯 Honey never spoils! 3,000-year-old honey is still edible!",
-                    "🐙 Octopuses have 3 hearts and blue blood!",
-                    "⚡ Lightning is 5 times hotter than the surface of the sun!"
-                ];
-                return getRandomItem(facts);
-            }
-
-            // Default
-            return "🤔 I'm not sure about that, but I can help with:\n\n🎮 Roblox game ideas\n🔬 Science questions (ask me why the sky is blue!)\n😂 Jokes\n📚 Study tips\n\nWhat would you like to know?";
-        }
-
-        function sendMessage() {
-            const message = userInput.value.trim();
-            if (!message) return;
-
-            userInput.disabled = true;
-            sendBtn.disabled = true;
-            typingIndicator.classList.add('active');
-
-            addMessage('user', message);
-            userInput.value = '';
-
-            setTimeout(function() {
-                const response = generateResponse(message);
-                addMessage('bot', response);
-
-                typingIndicator.classList.remove('active');
-                userInput.disabled = false;
-                sendBtn.disabled = false;
-                userInput.focus();
-            }, 1000);
-        }
-
-        // Click button
-        sendBtn.addEventListener('click', sendMessage);
-
-        // Press Enter
-        userInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
-    </script>
-</body>
-</html>
+            tycoon: [
+                "🏪 **MEGA MALL TYCOON**: Shopping empire!\n• Start with 1 shop, expand to 50+ stores\n• Store types: clothing, food, electronics, toys, sports\n• Hire employees and security\n• Parking lot with valet service\n• Food court with multiple restaurants\n• Movie theater and arcade\n• Seasonal sales events\n• Upgrade decorations and lighting\n• Customer satisfaction meter\n• Expand to multiple malls",
+                
+                "🎢 **THEME PARK EMPIRE**: Amusement paradise!\n• Design 30+ different rides\n• Custom roller coaster builder\n• Food stands and game booths\n• Hire performers and mascots\n• Queue line management\n• Park cleanliness affects reviews\n• Nightly fireworks shows\n• Seasonal themes (Halloween, Christmas)\n• VIP fast pass system\n• Water park expansion",
+                
+                "🏗️ **CITY
             
