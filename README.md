@@ -109,202 +109,86 @@
     </div>
 
     <script>
-        // MEGA DATABASE - 120+ ROBLOX GAME IDEAS!
+        // ROBLOX STUDIO TUTORIALS - HOW TO DO THINGS!
+        var studioTutorials = {
+            "start": "🎮 HOW TO START WITH ROBLOX STUDIO:\n\n1. Download Roblox Studio (FREE at roblox.com)\n2. Open it and click 'New'\n3. Choose a template or 'Baseplate'\n4. Use Explorer window to see your game parts\n5. Press F5 to test your game!\n6. Save often with Ctrl+S\n\nStart simple - make a platform to stand on first!",
+            
+            "add part": "🧱 HOW TO ADD PARTS:\n\n1. Click 'Part' button in Home tab (or Model tab)\n2. Choose shape: Block, Sphere, Cylinder, Wedge\n3. Use Move tool (M key) to position it\n4. Use Scale tool (R key) to resize it\n5. Use Rotate tool (T key) to turn it\n6. Change color in Properties window!\n\nTIP: Copy with Ctrl+C, paste with Ctrl+V!",
+            
+            "script": "📝 HOW TO ADD SCRIPTS:\n\n1. Click the part you want to script\n2. Press '+' button in Explorer next to the part\n3. Choose 'Script' (for server) or 'LocalScript' (for player)\n4. Type your Lua code inside!\n5. Press F5 to test!\n\nExample script:\nprint('Hello World!')\nwait(2)\nscript.Parent.BrickColor = BrickColor.Random()\n\nStart simple and build up!",
+            
+            "color": "🎨 HOW TO CHANGE COLORS:\n\n1. Select the part you want to color\n2. Look at Properties window (right side)\n3. Find 'BrickColor' or 'Color'\n4. Click it to open color picker\n5. Choose your favorite color!\n\nTIP: You can also change 'Material' to make things look like wood, metal, grass, etc!",
+            
+            "move": "🏃 HOW TO MAKE THINGS MOVE:\n\nSimple movement script:\n\nwhile true do\n    wait(0.1)\n    script.Parent.Position = script.Parent.Position + Vector3.new(0.1, 0, 0)\nend\n\nSpinning script:\n\nwhile true do\n    wait(0.01)\n    script.Parent.CFrame = script.Parent.CFrame * CFrame.Angles(0, 0.1, 0)\nend\n\nUse TweenService for smooth movement!",
+            
+            "teleport": "✨ HOW TO MAKE A TELEPORTER:\n\n1. Create 2 parts (start and end teleporter)\n2. Add Script to start part\n3. Use this code:\n\nlocal endPart = game.Workspace.EndPart\n\nscript.Parent.Touched:Connect(function(hit)\n    local humanoid = hit.Parent:FindFirstChild('Humanoid')\n    if humanoid then\n        hit.Parent:MoveTo(endPart.Position)\n    end\nend)\n\nMake them glow with PointLight for cool effect!",
+            
+            "gui": "📱 HOW TO MAKE GUI (MENUS/BUTTONS):\n\n1. Click StarterGui in Explorer\n2. Insert a ScreenGui\n3. Add TextLabel for text OR TextButton for buttons\n4. Use Properties to change size, color, text\n5. Add LocalScript to make buttons work!\n\nButton click script:\nlocal button = script.Parent\nbutton.MouseButton1Click:Connect(function()\n    print('Button clicked!')\nend)\n\nGUIs are great for health bars, shops, menus!",
+            
+            "sound": "🔊 HOW TO ADD SOUNDS:\n\n1. Find a sound on Roblox website\n2. Copy the Sound ID number\n3. In Studio, insert a Sound object into part\n4. Paste ID in SoundId property: rbxassetid://12345\n5. Use script to play:\n\nlocal sound = script.Parent.Sound\nsound:Play()\n\nTo loop: sound.Looped = true\nTo stop: sound:Stop()\n\nSounds make games WAY more fun!",
+            
+            "spawn": "🎯 HOW TO MAKE SPAWN POINT:\n\n1. Go to Model tab\n2. Click 'Spawn' (or insert SpawnLocation)\n3. Move it where you want players to start\n4. Change its color in Properties\n5. Set Duration to 0 for instant respawn\n6. Make sure it's Anchored!\n\nYou can have multiple spawns for different teams!",
+            
+            "lighting": "💡 HOW TO CHANGE LIGHTING:\n\n1. Find 'Lighting' in Explorer\n2. Change these properties:\n   • TimeOfDay: '14:00:00' for day, '00:00:00' for night\n   • Brightness: Higher = brighter (default 2)\n   • Ambient: Background light color\n   • OutdoorAmbient: Outdoor light color\n3. For fog: Change FogEnd and FogColor\n4. Try ClockTime for cool effects!\n\nGood lighting makes your game look AMAZING!",
+            
+            "team": "👥 HOW TO CREATE TEAMS:\n\n1. Insert 'Teams' service in Explorer\n2. Add Team objects inside it\n3. Set TeamColor for each team\n4. Name your teams (Red Team, Blue Team, etc)\n5. SpawnLocations can have TeamColor too!\n\nScript to assign player to team:\ngame.Players.PlayerAdded:Connect(function(player)\n    player.Team = game.Teams.RedTeam\nend)\n\nGreat for team games!",
+            
+            "leaderboard": "📊 HOW TO MAKE LEADERBOARD:\n\nAdd this script to ServerScriptService:\n\ngame.Players.PlayerAdded:Connect(function(player)\n    local leaderstats = Instance.new('Folder')\n    leaderstats.Name = 'leaderstats'\n    leaderstats.Parent = player\n    \n    local coins = Instance.new('IntValue')\n    coins.Name = 'Coins'\n    coins.Value = 0\n    coins.Parent = leaderstats\nend)\n\nThis shows on right side of screen!\nAdd more IntValues for different stats!",
+            
+            "collect": "💰 HOW TO MAKE COLLECTIBLE COINS:\n\n1. Create a coin part (cylinder works great!)\n2. Make it yellow/gold colored\n3. Add this Script to the coin:\n\nlocal coin = script.Parent\n\ncoin.Touched:Connect(function(hit)\n    local player = game.Players:GetPlayerFromCharacter(hit.Parent)\n    if player then\n        player.leaderstats.Coins.Value = player.leaderstats.Coins.Value + 1\n        coin:Destroy()\n    end\nend)\n\nMake it spin for extra coolness!",
+            
+            "tool": "🔧 HOW TO CREATE TOOLS:\n\n1. Insert a 'Tool' object\n2. Add a Part inside the Tool (this is the handle)\n3. Name the part 'Handle'\n4. Add a Script to the Tool\n5. Put Tool in StarterPack\n\nBasic tool script:\nlocal tool = script.Parent\n\ntool.Activated:Connect(function()\n    print('Tool used!')\nend)\n\nTools can be swords, flashlights, anything!",
+            
+            "animation": "🎭 HOW TO ADD ANIMATIONS:\n\n1. Use Animation Editor plugin\n2. Create keyframes for movement\n3. Save animation and get Animation ID\n4. Load in script:\n\nlocal humanoid = character:WaitForChild('Humanoid')\nlocal animator = humanoid:WaitForChild('Animator')\nlocal animation = Instance.new('Animation')\nanimation.AnimationId = 'rbxassetid://12345'\nlocal animTrack = animator:LoadAnimation(animation)\nanimTrack:Play()\n\nAnimations make characters come alive!",
+            
+            "camera": "📷 HOW TO CONTROL CAMERA:\n\nIn LocalScript:\n\nlocal camera = workspace.CurrentCamera\nlocal player = game.Players.LocalPlayer\n\n-- First person\ncamera.CameraType = Enum.CameraType.Scriptable\ncamera.CFrame = player.Character.Head.CFrame\n\n-- Lock to part\ncamera.CameraSubject = workspace.Part\n\n-- Zoom limits\nplayer.CameraMaxZoomDistance = 50\nplayer.CameraMinZoomDistance = 10\n\nCamera control = cinematic games!",
+            
+            "datastore": "💾 HOW TO SAVE PLAYER DATA:\n\nIn ServerScriptService:\n\nlocal DataStoreService = game:GetService('DataStoreService')\nlocal myDataStore = DataStoreService:GetDataStore('MyData')\n\n-- Save data\ngame.Players.PlayerRemoving:Connect(function(player)\n    local success, err = pcall(function()\n        myDataStore:SetAsync(player.UserId, player.leaderstats.Coins.Value)\n    end)\nend)\n\n-- Load data\ngame.Players.PlayerAdded:Connect(function(player)\n    local data = myDataStore:GetAsync(player.UserId)\n    if data then\n        player.leaderstats.Coins.Value = data\n    end\nend)\n\nSaves coins, levels, items!",
+            
+            "publish": "🌟 HOW TO PUBLISH YOUR GAME:\n\n1. Make sure your game works (test with F5!)\n2. Click File → Publish to Roblox\n3. Give your game a cool name\n4. Write a description (tell people what it is!)\n5. Choose if it's public or private\n6. Click 'Create' or 'Update'\n7. Set game icon and thumbnails in game settings\n8. Share the link with friends!\n\nTest thoroughly before publishing!",
+            
+            "test": "🎮 HOW TO TEST YOUR GAME:\n\n• Press F5 to play in Studio\n• Press F8 to stop playing\n• Use WASD to move\n• Space to jump\n• Mouse to look around\n\nAdvanced testing:\n• F6 = Test with multiple players\n• F7 = Test as server only\n• View → Output to see errors/prints\n\nALWAYS test before showing friends!",
+            
+            "anchor": "⚓ HOW TO ANCHOR PARTS:\n\n1. Select the part\n2. Look at Properties window\n3. Find 'Anchored' checkbox\n4. Check it to anchor (part won't fall!)\n5. Uncheck to make it fall with gravity\n\nWHEN TO ANCHOR:\n• Buildings, floors, walls\n• Platforms that shouldn't move\n• Decorations\n\nWHEN NOT TO ANCHOR:\n• Moving platforms (use scripts instead)\n• Objects players should push\n• Falling objects",
+            
+            "group": "📁 HOW TO GROUP PARTS:\n\n1. Select multiple parts (hold Ctrl and click)\n2. Right-click and choose 'Group'\n3. OR press Ctrl+G\n4. This creates a Model\n5. Name the model in Properties\n6. Now you can move all parts together!\n\nUNGROUP: Ctrl+U\n\nGrouping = easier building!",
+            
+            "transparent": "👻 HOW TO MAKE PARTS TRANSPARENT:\n\n1. Select the part\n2. Find 'Transparency' in Properties\n3. Change value:\n   • 0 = fully visible\n   • 0.5 = half transparent\n   • 1 = invisible (but still there!)\n4. Use CanCollide = false to make players walk through\n\nGreat for:\n• Invisible walls/barriers\n• Glass windows\n• Ghost effects\n• Secret passages!",
+            
+            "resize": "📏 HOW TO RESIZE PARTS:\n\nMethod 1 - Scale Tool:\n1. Press R key (or click Scale in Home tab)\n2. Drag the handles to resize\n3. Hold Shift for uniform scaling\n\nMethod 2 - Properties:\n1. Select part\n2. Find 'Size' in Properties\n3. Change X, Y, Z values\n   • X = width\n   • Y = height  \n   • Z = depth\n\nTIP: Keep grid snap on for neat sizes!"
+        };
+
+        // Keep all game ideas from before
         var games = {
             obby: [
-                "🏃 SPEED RUNNER OBBY: Ultimate racing challenge! Moving platforms that accelerate, boost pads, slow zones, checkpoints every 10, difficulties Easy to INSANE, leaderboard for fastest times, secret shortcuts, rainbow trail on completion!",
-                "🌈 RAINBOW COLOR OBBY: Each level different color! RED=fire/lava, BLUE=ice/slippery, GREEN=nature/vines, YELLOW=lightning/electric, PURPLE=gravity flip, ORANGE=bouncy, final level mixes all!",
-                "🚀 SPACE OBBY: Journey from Earth to Black Hole! Zero gravity sections, asteroid jumping, rocket boosters, alien NPCs give hints, collect stars for shop, unlock spaceship skins and trails, planet-themed levels!",
-                "🏰 MEDIEVAL CASTLE OBBY: Escape dungeon to rooftop! Swinging axes, arrow traps, moving stone platforms, knight patrols, friendly dragon race at top, medieval shop with armor/sword skins, secret treasure rooms!",
-                "🌊 UNDERWATER OBBY: 50 levels surface to ocean floor! Swimming mechanics, oxygen bubbles, avoid sharks/jellyfish, coral reefs, shipwrecks, submarine checkpoints, collect pearls, bioluminescent levels!",
-                "🎪 CIRCUS OBBY: Greatest show! Tightrope walking, cannon launchers, trampoline zones, spinning wheels, dodge juggling balls, clown NPCs cheer, unlock circus outfits and confetti effects!",
-                "❄️ ICE MOUNTAIN OBBY: Climb frozen peak! Slippery ice physics, avalanche escape sequences, ice caves, yeti encounters, hot cocoa checkpoints, skiing sections, snowball dodge areas!",
-                "🏜️ DESERT PYRAMID OBBY: Ancient Egypt theme! Sand traps, mummy NPCs, hieroglyph puzzles, scarab collecting, pharaoh's treasure at top, sandstorm sections, oasis checkpoints!",
-                "🌋 VOLCANO OBBY: Active volcano! Lava rising sections, heat shield power-ups, eruption escape sequences, magma monsters, obsidian platforms, gem collecting, firefighter checkpoints!",
-                "🎃 HALLOWEEN OBBY: Spooky fun! Haunted house sections, friendly ghosts, pumpkin platforms, candy collecting, witch NPCs, spider web obstacles, graveyard maze, trick-or-treat checkpoints!",
-                "🎄 CHRISTMAS OBBY: Winter wonderland! Elf workshops, candy cane paths, snowflake platforms, present collecting, Santa's sleigh race, reindeer jumps, gingerbread house sections!",
-                "🌲 JUNGLE OBBY: Wild adventure! Vine swinging, waterfall jumps, quicksand pits, monkey helpers, ancient ruins, treasure hunting, animal crossing sections, treehouse checkpoints!",
-                "🏙️ CITY PARKOUR OBBY: Urban challenge! Rooftop jumping, crane climbing, billboard hopping, subway sections, traffic dodging, skyscraper scaling, neon night mode!",
-                "🌌 GALAXY OBBY: Cosmic journey! Wormhole teleports, nebula mazes, comet surfing, black hole gravity, planet hopping, star collecting, UFO encounters, alien technology!",
-                "🦖 DINOSAUR OBBY: Prehistoric adventure! T-Rex chase sections, pterodactyl flying, tar pit avoiding, volcano eruptions, caveman checkpoints, fossil collecting, time portal finale!"
+                "🏃 SPEED RUNNER OBBY: Ultimate racing challenge! Moving platforms that accelerate, boost pads, slow zones, checkpoints every 10, difficulties Easy to INSANE, leaderboard for fastest times, secret shortcuts, rainbow trail!",
+                "🌈 RAINBOW COLOR OBBY: Each level different color! RED=fire/lava, BLUE=ice/slippery, GREEN=nature/vines, YELLOW=lightning, PURPLE=gravity flip, ORANGE=bouncy!",
+                "🚀 SPACE OBBY: Journey from Earth to Black Hole! Zero gravity sections, asteroid jumping, rocket boosters, alien NPCs, collect stars, planet-themed levels!",
+                "🏰 MEDIEVAL CASTLE OBBY: Escape dungeon to rooftop! Swinging axes, arrow traps, knight patrols, dragon race at top, medieval shop!",
+                "🌊 UNDERWATER OBBY: 50 levels surface to ocean floor! Swimming mechanics, oxygen bubbles, avoid sharks/jellyfish, coral reefs, submarine checkpoints!"
             ],
-            
             simulator: [
-                "🐾 MEGA PET SIMULATOR: 100+ pets common to mythical! 3-stage evolution, custom homes with decorations, mini-games (fetch/agility/races), breeding for rare combos, pet abilities, daily care, trading system, pet accessories shop!",
-                "🍕 PIZZA EMPIRE: Build restaurant empire! Start with small stand, 50+ toppings, hire chefs/drivers/cashiers, upgrade ovens, multiple locations, custom pizza creator, delivery mini-game, pizza contests, food truck expansion!",
-                "⚔️ SWORD MASTER: 200+ legendary swords! Train stats (strength/speed/defense), battle training dummies, quest system, dungeon raids, forge swords from materials, enchantment system, PvP arena, armor sets, special combos!",
-                "🏝️ ISLAND BUILDER: Start tiny, expand island! Plant crops (wheat/corn/fruits/palms), build houses/shops/parks/beaches, attract tourists, unlock new islands (tropical/volcanic/arctic), fishing, treasure hunting, hire workers!",
-                "🧙 MAGIC ACADEMY: 50+ spells across 5 schools! Attend classes (Potions/Charms/Defense), collect wands with powers, familiar pets boost magic, homework quests, wizard duels, spell combinations, house competitions!",
-                "💎 MINING TYCOON: Dig for riches! 50+ gem types (ruby/diamond/emerald/mythical), upgrade pickaxe/drill/dynamite, hire miners for auto-mining, craft jewelry, unlock locations (volcano/ice cave/crystal cavern), prestige system!",
-                "🏋️ GYM SIMULATOR: Get super strong! Train in gym (weights/treadmill/boxing), level up strength/speed/endurance, unlock exercises/equipment, compete in competitions, hire trainer, healthy food shop, unlock gyms in cities!",
-                "🎨 ART STUDIO: Become master artist! Paint on canvas with 20+ colors, sell artwork, unlock styles/tools, gallery for displays, art contests, commission system, upgrade studio with easels/lighting!",
-                "☕ CAFE SIMULATOR: Run coffee shop! Make espresso/cappuccino/lattes, serve pastries, hire baristas, upgrade machines, morning rush challenges, loyal customer system, expand to chain, latte art competitions!",
-                "🍦 ICE CREAM SHOP: Scoop paradise! 50+ flavors to unlock, create sundaes/cones/shakes, serve customers, unlock toppings, ice cream truck, compete in contests, seasonal flavors, decorate shop!",
-                "🎮 GAME DEV SIMULATOR: Build game empire! Create games, hire programmers/artists/designers, publish games, earn from players, unlock game engines, attend conventions, win awards, grow studio!",
-                "🚗 CAR WASH TYCOON: Cleaning empire! Wash/wax/detail cars, upgrade equipment, hire workers, expand locations, unlock vehicle types (cars/trucks/buses/planes!), VIP service, car show events!",
-                "🏥 HOSPITAL SIMULATOR: Run medical center! Hire doctors/nurses, treat patients, upgrade equipment, research cures, expand wings, emergency room chaos, ambulance service, save lives!",
-                "🎸 MUSIC STUDIO: Rock star life! Learn instruments, write songs, record albums, perform concerts, hire band members, upgrade studio, tour world, win Grammys, fan club system!",
-                "🌾 FARM SIMULATOR: Country life! Plant crops, raise animals (cows/chickens/pigs), sell produce, upgrade equipment, expand farm, seasonal changes, farmers market, harvest festivals!",
-                "🎬 MOVIE STUDIO: Hollywood mogul! Direct films, hire actors, build sets, special effects, release movies, box office tracking, win Oscars, franchise building, theme park attractions!",
-                "🏪 SUPERMARKET TYCOON: Retail empire! Stock shelves, hire cashiers, expand store, multiple departments (produce/bakery/deli), manage inventory, promotions, loyalty cards, delivery service!",
-                "🦸 SUPERHERO ACADEMY: Train heroes! Unlock powers (flight/strength/speed/invisibility), save city from villains, hero costume creator, team up missions, upgrade powers, hero rankings!",
-                "🍔 FOOD TRUCK EMPIRE: Mobile restaurant! Multiple food trucks (tacos/burgers/sushi), travel to events, unlock recipes, hire drivers, upgrade trucks, compete in food festivals!",
-                "🎪 CARNIVAL TYCOON: Build fairground! Set up rides, game booths, food stands, hire staff, prizes management, seasonal events, fireworks shows, expand to traveling circus!"
-            ],
-            
-            adventure: [
-                "🗺️ TREASURE ISLAND QUEST: Ultimate hunt! Massive island with 20+ locations, find map pieces, solve riddles/puzzles, explore caves/temples, ancient traps (arrows/boulders), boss Guardian, hidden rooms, map reveals as you explore!",
-                "🏰 KINGDOM QUEST RPG: Save the realm! Choose Knight/Wizard/Archer/Rogue, 30+ quests from NPCs, battle system with skills, explore forests/caves/villages/castles, collect gear, level 1-50, final boss Dark Sorcerer!",
-                "🌲 ENCHANTED FOREST: Magical journey! Meet fairies/unicorns/talking trees, 15 forest zones, gather herbs/berries, craft potions/spells, animal companions, build treehouse hideout, seasonal events, restore forest magic!",
-                "🏴‍☠️ PIRATE ADVENTURE: Sail the seas! Captain your ship, visit 10 islands, treasure maps to buried gold, naval battles with pirates, recruit crew, upgrade ship (cannons/sails), sea monsters, trade ports!",
-                "🏔️ MOUNTAIN EXPEDITION: Climb the peak! Multi-day journey, survival mechanics (warmth/energy/hunger), scenic viewpoints, weather challenges (storms/avalanches), wildlife encounters, upgrade gear, photograph sights!",
-                "🌋 VOLCANO ESCAPE: Island erupting! Build raft to escape, gather supplies as lava flows, evacuate with friends co-op, rescue animals, hot zones to avoid, earthquake events, epic escape finale!",
-                "🏺 ANCIENT TEMPLE: Explore ruins! Hieroglyph puzzles, trap rooms (spikes/arrows/rolling stones), treasure chambers, torch lighting in darkness, multiple endings based on choices, decode ancient story!",
-                "🎭 MYSTERY MANSION: Detective work! 30-room haunted house, collect clues/evidence, interview ghost NPCs, puzzle rooms with riddles, secret passages behind bookcases, piece together mystery, multiple suspects!",
-                "🏛️ ROMAN EMPIRE: Historical adventure! Become gladiator/senator/merchant, explore ancient Rome (Colosseum/Forum/Pantheon), chariot races, political intrigue, build reputation, multiple storylines!",
-                "🦖 DINOSAUR ISLAND: Prehistoric survival! Explore island with dinosaurs, tame dinos as mounts, gather resources, build camps, discover fossils, escape T-Rex chases, solve extinction mystery!",
-                "🌊 ATLANTIS QUEST: Lost city underwater! Dive deep, discover ruins, unlock ancient technology, befriend merfolk, solve puzzles to raise Atlantis, collect artifacts, sea creature battles!",
-                "🏜️ DESERT CARAVAN: Cross the dunes! Lead caravan across vast desert, manage supplies (water/food), sandstorms, bandit attacks, discover oases, ancient ruins, reach legendary city!",
-                "❄️ ARCTIC EXPEDITION: North Pole adventure! Dog sled racing, igloo building, aurora borealis viewing, polar bear encounters (friendly!), ice fishing, discover lost research station!",
-                "🌴 TROPICAL PARADISE: Island hopping! Visit 20 islands each unique, solve island-specific mysteries, build bridges between islands, volcano island, haunted island, treasure island!",
-                "🎪 TIME TRAVELER: Through history! Start present day, travel to Ancient Egypt/Medieval times/Wild West/Future, complete missions in each era, collect historical artifacts, prevent time paradoxes!"
-            ],
-            
-            racing: [
-                "🏎️ TURBO KART RACING: Ultimate championship! 20 tracks (city/beach/volcano/space/jungle/underwater), 50+ karts, power-ups (rockets/shields/boost/oil/lightning), customize paint/decals/wheels, championship mode, time trials, multiplayer!",
-                "🛹 SKATE PARK PRO: Extreme skating! Massive park with 10 sections, trick system (kickflip/ollie/grind/manual), combo multiplier, S-K-A-T-E letters, create custom parks, 30+ boards, sponsored challenges!",
-                "🏁 DRAG RACING: Quarter-mile mayhem! Perfect launch timing, gear shift mechanics, nitrous boost, tune cars (engine/tires/transmission), 40+ cars, underground story, pink slip races, custom wraps!",
-                "🚁 HELICOPTER RACING: Sky competition! Choppers/planes/jets, ring checkpoint courses through clouds, barrel rolls/loops, weather challenges, 15 aircraft, canyon racing, stunt mode!",
-                "🏇 HORSE RACING: Derby excitement! Train horses, 10 breeds, jump obstacles, betting system, breeding mechanics, jockey outfits, famous tracks, bonding affects performance!",
-                "🚤 BOAT RACING: Water speed! Jet skis/speedboats/yachts, ocean/river/lake tracks, wave physics affects handling, trick jumps off ramps, marine obstacles, underwater tunnels!",
-                "🏃 PARKOUR RACE: Free-running! Wall runs, precision jumps, vaults, city rooftops, time attack mode, multiplayer racing, unlock movement abilities, style points, create custom courses!",
-                "🚂 TRAIN RACING: Railroad madness! Control locomotives, switch tracks for shortcuts, coal management (speed vs fuel), 10 historical trains, mountain passes/city routes, weather affects tracks!",
-                "🦖 DINOSAUR RACING: Prehistoric speed! Race different dinosaurs (T-Rex/Raptor/Pterodactyl/Triceratops), each has unique abilities, prehistoric tracks through jungles/volcanoes, dino customization!",
-                "🎢 ROLLER COASTER RACING: Thrill ride competition! Race on custom coaster tracks, loops/corkscrews/drops, speed management, multiplayer, build your own tracks, theme park settings!",
-                "🚀 ROCKET RACING: Space speed! Fly rockets through space, planetary rings, asteroid fields, wormhole shortcuts, upgrade rockets, zero-gravity sections, cosmic tracks!",
-                "🏍️ MOTORCYCLE RACING: Bike championship! Dirt bikes/sport bikes/choppers, motocross tracks, highway racing, stunts and wheelies, customize bikes, gang territory races!",
-                "🎿 DOWNHILL SKIING: Alpine racing! Ski down mountains, slalom gates, avoid obstacles, speed sections, trick jumps, different mountains (Alps/Rockies/Japan), weather conditions!",
-                "🛼 ROLLER DERBY: Rink racing! Roller skate around track, bump opponents, power-ups, team mode, trick systems, customize skates/outfits, different rink types!",
-                "🏐 BEACH RACING: Coastal speed! Race on beaches, jet ski sections, sandcastle obstacles, boardwalk areas, surfboard segments, volleyball courts, tiki bars!"
-            ],
-            
-            tycoon: [
-                "🏪 MEGA MALL TYCOON: Shopping empire! Start 1 shop expand to 50+, different stores (clothing/food/electronics/toys/sports), hire employees/security, parking with valet, food court, theater/arcade, seasonal events!",
-                "🎢 THEME PARK EMPIRE: Amusement paradise! 30+ rides, custom roller coaster builder, food stands/games, performers/mascots, queue management, cleanliness matters, fireworks shows, seasonal themes!",
-                "🏗️ CITY BUILDER: Metropolis maker! Village to mega city, zone residential/commercial/industrial, infrastructure (roads/power/water), 100+ buildings, budget/taxes, public services, transportation!",
-                "🍔 RESTAURANT CHAIN: Food empire! Multiple chains, menu customization, drive-thru/dine-in, hire/train staff, marketing campaigns, compete with rivals, expand to new cities!",
-                "🏨 RESORT TYCOON: Luxury paradise! Beachfront resort, room types (standard to presidential), amenities (pool/spa/restaurant/bar), events (weddings/conferences), guest reviews affect reputation!",
-                "🎮 ARCADE EMPIRE: Retro gaming! 50+ arcade cabinets, ticket prizes, claw machines, VR section, snack bar, tournaments, maintain/repair machines, nostalgic themes!",
-                "🏭 FACTORY TYCOON: Industrial production! Build production lines, raw materials to products, conveyor automation, hire workers, research technologies, fulfil orders, expand factory!",
-                "🏪 GAS STATION EMPIRE: Fuel business! Pumps, convenience store, car wash, repairs, hire attendants, expand locations, loyalty programs, truck stop services!",
-                "🏥 HOSPITAL EMPIRE: Medical network! Build hospitals, hire doctors/nurses, research cures, emergency rooms, upgrade equipment, ambulances, expand departments!",
-                "🎬 MOVIE THEATER CHAIN: Cinema empire! Multiple theaters, different movie types, concessions, comfortable seats, IMAX screens, VIP lounges, premiere events!",
-                "🏊 WATER PARK TYCOON: Splash paradise! Water slides, wave pools, lazy rivers, splash pads, lifeguard stations, cabanas, food stands, seasonal operations!",
-                "🎳 BOWLING ALLEY: Strike business! Multiple lanes, arcade section, food/drinks, cosmic bowling nights, leagues, tournaments, pro shop, party rooms!",
-                "🏋️ GYM CHAIN: Fitness empire! Equipment variety, personal trainers, classes (yoga/spin/kickboxing), juice bar, locker rooms, multiple locations, membership tiers!",
-                "🏡 REAL ESTATE MOGUL: Property empire! Buy/sell/rent houses, renovate properties, property management, market fluctuations, commercial properties, become billionaire!",
-                "🚗 CAR DEALERSHIP: Auto sales! New/used cars, test drives, financing, trade-ins, service department, expand brands, luxury section, custom orders!"
-            ],
-            
-            fighting: [
-                "🥊 SUPERHERO BATTLE ARENA: Comic combat! Create heroes with superpowers (flight/strength/laser eyes/invisibility), punch/kick/special moves, different arenas (city/volcano/space), unlock costumes/abilities, hero rankings!",
-                "⚔️ MEDIEVAL COMBAT: Knights duel! Swords/shields/axes/maces, blocking system, different weapon types, armor upgrades (leather/chainmail/plate), tournament mode, jousting, castle sieges!",
-                "🤖 ROBOT BATTLE: Mech warfare! Build battle robots, customize parts/weapons/colors (lasers/missiles/saws), arena with hazards, weight classes, tournament mode, team battles!",
-                "🥋 NINJA DOJO: Shinobi combat! Learn ninja moves, stealth kills, throwing stars/kunai, katana fighting, wall-running, smoke bombs, shadow clones, ninja rankings!",
-                "🦖 DINOSAUR BATTLE: Prehistoric combat! Control dinosaurs (T-Rex strong/Raptor fast/Pterodactyl flies/Stego tank), unique abilities, prehistoric arenas, dino customization, evolution system!",
-                "🧙 WIZARD DUEL: Magic combat! Cast spells (fireball/ice blast/lightning/shield), wand dueling, potion throwing, familiar pets help fight, arena hazards, wizard tournaments!",
-                "🦸 ANIME FIGHTER: Manga-style combat! Anime characters with special abilities, energy attacks, transformation modes, aerial combos, story mode, unlock characters, ranked matches!",
-                "👽 ALIEN INVASION: Sci-fi combat! Humans vs Aliens, different alien species with unique abilities, futuristic weapons (plasma/laser/ray guns), space station battles!",
-                "🐉 DRAGON RIDERS: Aerial combat! Ride dragons into battle, dragon abilities (fire breath/ice breath/lightning), dragon customization, sky battles, ground combat mode!",
-                "🎭 SUPERHERO VS VILLAIN: Good vs Evil! Choose hero or villain side, iconic powers, team battles, destructible environments, city battles, unlock legendary characters!",
-                "🥊 BOXING CHAMPIONSHIP: Prize fights! Create boxer, train stats, learn combos/special punches, dodge/block/counter, career mode, championship belts, custom gloves!",
-                "🗡️ SAMURAI SHOWDOWN: Honor combat! Samurai sword fighting, stance system (aggressive/defensive/balanced), honor points, dojo battles, feudal Japan setting!",
-                "👊 STREET FIGHTER: Urban brawl! Street fighting styles (boxing/kickboxing/wrestling/MMA), underground tournaments, rival gangs, reputation system, unlock moves!",
-                "🦁 ANIMAL ARENA: Beast battles! Control different animals (lion/bear/gorilla/wolf/eagle), unique animal abilities, natural environments, food chain mechanics!",
-                "⚡ ELEMENTAL WARRIORS: Power combat! Control elements (fire/water/earth/air/lightning), element combinations, environmental advantages, elemental transformations!"
-            ],
-            
-            survival: [
-                "🏝️ STRANDED ISLAND: Ultimate survival! Start with nothing, gather resources (wood/stone/fruit), craft tools/weapons, build shelter from storms, hunt/fish, fresh water management, explore for secrets, signal fire!",
-                "❄️ ARCTIC SURVIVAL: Frozen wilderness! Temperature critical, build igloo shelters, ice fishing, craft warm clothing, blizzard survival, polar bear encounters, northern lights navigation, limited daylight!",
-                "🌋 VOLCANO ISLAND ESCAPE: Eruption! Island volcano erupting, build raft to escape, gather supplies as lava flows, co-op evacuation, rescue animals, hot zones, earthquakes, ash clouds!",
-                "🌵 DESERT SURVIVAL: Extreme heat! Find oasis for water, build shade shelters, cacti resources, sandstorms, scorpion/snake dangers, camel companion, mirages, night freezing cold!",
-                "🌲 WILDERNESS CAMPING: Forest survival! Set up camp, gather firewood, cook on campfire, pitch tent before dark, wildlife encounters, hiking for resources, stream water, storm prep!",
-                "🏚️ ABANDONED CITY: Urban survival! Scavenge buildings for supplies, avoid hazards, build safe zone base, limited resources, help other survivors, grow food in gardens, defend from threats!",
-                "🌊 OCEAN RAFT: Lost at sea! Expand raft with debris, catch fish, collect rainwater, sharks circle raft, island hopping, craft equipment, weather storms, navigate by stars!",
-                "🏔️ MOUNTAIN SURVIVAL: Alpine challenge! Survive mountain conditions, altitude sickness, climbing gear needed, avalanche danger, find shelter in caves, hunt mountain goats, reach peak!",
-                "🦖 DINOSAUR SURVIVAL: Jurassic danger! Survive with dinosaurs, build secure base, tame friendly dinos, avoid predators (T-Rex/Raptors), gather resources, craft weapons, discover escape!",
-                "👽 ALIEN PLANET: Extraterrestrial survival! Crash land on alien world, strange creatures, unusual resources, toxic atmosphere (need suit), alien plants, build escape ship!",
-                "🧟 ZOMBIE APOCALYPSE: Undead survival! Survive zombie hordes, fortify base, craft weapons, find survivors, limited ammo, food/water scarcity, rescue missions, find cure!",
-                "🌪️ STORM CHASER: Disaster survival! Survive natural disasters (tornadoes/hurricanes/earthquakes), emergency shelter, rescue others, weather prediction, supply management!",
-                "🏕️ CAMPING TRIP GONE WRONG: Nature survival! Lost in woods, find way back, build emergency shelter, avoid predators, forage for food, signal for rescue, night dangers!",
-                "☢️ NUCLEAR WASTELAND: Post-apocalypse! Survive radiation zones, wear protective gear, scavenge bunkers, mutant creatures, contaminated water, find underground shelter, rebuild!",
-                "🌑 MOON BASE: Space survival! Survive on moon base, oxygen management, grow food hydroponically, repair equipment, meteor showers, explore craters, return to Earth!"
-            ],
-            
-            puzzle: [
-                "🧩 PUZZLE PALACE: Brain challenge castle! 100+ puzzles, different types (jigsaw/logic/pattern/memory), unlock rooms, increasing difficulty, time trials, leaderboards!",
-                "🔍 MYSTERY DETECTIVE: Solve cases! Find clues, interrogate suspects, puzzle mini-games, crime scene investigation, connect evidence, multiple cases, detective rank!",
-                "🎯 ESCAPE ROOM: Ultimate escapes! 20+ themed rooms, find keys/codes, solve riddles, use items together, hidden objects, time pressure, co-op mode!",
-                "🔢 NUMBER QUEST: Math adventure! Solve number puzzles to progress, different operations (+/-/×/÷), pattern recognition, unlock math powers, boss battles using math!",
-                "🎨 COLOR MIXING LAB: Science puzzles! Mix colors to solve puzzles, learn color theory, create specific shades, timed challenges, unlock new colors, art science!",
-                "🧠 BRAIN TEASER PARK: Mind games! Each ride is puzzle (memory/pattern/logic/word), level up intelligence, unlock new attractions, compete with friends!",
-                "🔐 LOCKSMITH: Master locks! Pick locks with mini-games, different lock types (combination/key/electronic), break into safes, heist missions, unlock legendary vaults!",
-                "🎲 MAZE MASTER: Labyrinth challenge! Navigate complex mazes, moving walls, trap avoidance, time limits, collect keys, unlock harder mazes, 3D mazes!",
-                "💡 INVENTION LAB: Engineering puzzles! Build machines to solve problems, physics-based, chain reactions, Rube Goldberg machines, unlock parts!",
-                "🗺️ MAP PUZZLES: Geography challenge! Piece together maps, learn countries/capitals, geographic features, cultural facts, world tour, unlock continents!"
-            ],
-            
-            roleplay: [
-                "🏡 NEIGHBORHOOD LIFE: Suburban roleplay! Own customizable house, 20+ furniture items, adopt pets, jobs (teacher/doctor/chef/artist), neighborhood events (BBQ/garage sales), drive cars, visit friends!",
-                "🎒 ULTIMATE SCHOOL: Complete experience! Student or teacher role, 10 classrooms, take classes (Math/Science/Art/PE), cafeteria, playground, lockers, school events (dances/sports day), clubs!",
-                "🏥 MEDICAL CENTER: Hospital roleplay! Roles (doctor/nurse/patient/surgeon), departments (ER/surgery/pediatrics), medical tools, patient care mini-games, ambulance service, pharmacy/lab!",
-                "🌆 CITY LIFE: Urban living! Apartments/houses, 20+ job options, shopping mall, restaurants/cafes, public transport (bus/subway/taxi), parks, police/firefighter roles, city events!",
-                "🏖️ BEACH RESORT: Tropical paradise! Beach houses/hotels, water activities (swimming/surfing/diving), beach cafe jobs, volleyball/sandcastles, boat rentals, sunset parties, seashell collecting!",
-                "🏰 ROYAL CASTLE: Medieval fantasy! Roles (king/queen/knight/wizard/peasant), throne room, jousting tournaments, royal feasts, castle defense, medieval jobs, coronation ceremonies!",
-                "🚀 SPACE STATION: Futuristic roleplay! Astronaut/scientist/engineer roles, zero gravity sections, space missions/repairs, alien encounters, research labs, spaceship hangars, galactic travel!",
-                "🎪 CIRCUS LIFE: Big top roleplay! Roles (ringmaster/acrobat/clown/magician), performance shows, practice/train skills, animal care, costume customization, travel to cities!",
-                "🏙️ OFFICE BUILDING: Corporate life! Work in skyscraper, different jobs (CEO/manager/employee), meetings, deadlines, promotions, office politics, lunch breaks, coffee breaks!",
-                "🏕️ SUMMER CAMP: Outdoor adventure! Camper or counselor, cabins, campfire activities, crafts, hiking, canoeing, talent shows, camp games, make friends!",
-                "🏛️ MUSEUM: Educational roleplay! Work as guide/curator/security, different exhibits (dinosaurs/art/space/history), school field trips, special events, artifact restoration!",
-                "✈️ AIRPORT: Travel roleplay! Pilot/flight attendant/passenger/security, check-in process, board planes, in-flight service, different destinations, luggage handling!",
-                "🏪 RETAIL LIFE: Store roleplay! Work as cashier/manager/stocker, help customers, restock shelves, handle complaints, inventory, sales events, employee of month!",
-                "🎬 MOVIE SET: Film roleplay! Actor/director/crew/producer, film scenes, costume/makeup, script reading, premiere events, paparazzi, awards shows!",
-                "🎵 MUSIC VENUE: Concert life! Musician/roadie/security/fan, perform shows, backstage access, meet and greets, tour bus, record studio, fan club!"
+                "🐾 MEGA PET SIMULATOR: 100+ pets! 3-stage evolution, custom homes, mini-games, breeding, pet abilities, daily care, trading!",
+                "🍕 PIZZA EMPIRE: Restaurant empire! 50+ toppings, hire staff, upgrade ovens, multiple locations, delivery mini-game, competitions!",
+                "⚔️ SWORD MASTER: 200+ legendary swords! Train stats, battle dummies, quest system, dungeon raids, forge swords, PvP arena!"
             ]
         };
 
-        // Knowledge base (same as before)
         var knowledge = {
-            "sky blue": "🌤️ The sky is blue because of Rayleigh scattering! Sunlight hits air molecules and blue light scatters more than other colors.",
-            "planes fly": "✈️ Planes fly because of lift! Wings are shaped so air moves faster over the top, creating lower pressure that lifts the plane!",
-            "gravity": "🌍 Gravity is a force that pulls objects together! Earth's gravity keeps us on the ground and makes things fall.",
-            "fastest animal": "🐆 Land: Cheetah 70mph! Air: Peregrine falcon 240+mph! Water: Sailfish 68mph!",
-            "biggest animal": "🐋 Blue whale - biggest ever! Up to 100 feet long, 200 tons!",
-            "pandas eat": "🐼 Pandas eat bamboo - 26-84 pounds daily! They spend 12-16 hours eating!",
-            "planets": "🪐 8 planets: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune!",
-            "black hole": "⚫ Black hole is where gravity is SO strong nothing escapes - not even light!",
-            "photosynthesis": "🌱 Plants make food from sunlight! They use sunlight, water, CO2 to create sugar and oxygen!",
-            "dinosaurs": "🦖 Dinosaurs went extinct 65 million years ago from asteroid impact!",
-            "moon": "🌙 Moon phases show how much sunlight we see reflected! Takes 29.5 days for full cycle."
+            "sky blue": "🌤️ The sky is blue because of Rayleigh scattering! Sunlight hits air molecules and blue light scatters more.",
+            "planes fly": "✈️ Planes fly because of lift! Wings create lower pressure on top, lifting the plane!",
+            "gravity": "🌍 Gravity pulls objects together! Earth's gravity keeps us on the ground.",
+            "fastest animal": "🐆 Land: Cheetah 70mph! Air: Peregrine falcon 240+mph!",
+            "planets": "🪐 8 planets: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune!"
         };
 
         var jokes = [
             "Why don't scientists trust atoms? Because they make up everything! 😄",
             "What do you call a bear with no teeth? A gummy bear! 🐻",
-            "Why did the bicycle fall over? It was two-tired! 🚲",
-            "What do you call a fake noodle? An impasta! 🍝",
-            "What did the ocean say to the beach? Nothing, it just waved! 🌊"
+            "Why did the bicycle fall over? It was two-tired! 🚲"
         ];
 
-        var facts = [
-            "🦈 Sharks are older than trees! 400 million years vs 350 million!",
-            "🍯 Honey never spoils! 3,000-year-old honey is still edible!",
-            "🐙 Octopuses have 3 hearts and blue blood!",
-            "⚡ Lightning is 5 times hotter than the sun's surface!"
-        ];
-
-        addBot("👋 Hey! I'm your Roblox AI Helper!\n\n🎮 I have 120+ ROBLOX GAME IDEAS!\n\nCategories:\n• Obby (15 ideas)\n• Simulator (20 ideas)\n• Adventure (15 ideas)\n• Racing (15 ideas)\n• Tycoon (15 ideas)\n• Fighting (15 ideas)\n• Survival (15 ideas)\n• Puzzle (10 ideas)\n• Roleplay (15 ideas)\n\nJust ask for any category!");
+        addBot("👋 Hey! I'm your Roblox AI Helper!\n\n🎮 I can help with:\n• Game ideas (120+ ideas!)\n• How to use Roblox Studio\n• Scripting tutorials\n• Building tips\n• Science questions\n• Jokes and fun facts\n\nWhat would you like to know?");
 
         function addBot(text) {
             var div = document.createElement('div');
@@ -347,57 +231,61 @@
 
             // Greetings
             if (!response && (lower.includes('hello') || lower.includes('hi') || lower.includes('hey'))) {
-                response = "👋 Hey! What kind of game idea do you want?";
+                response = "👋 Hey! Want game ideas or help with Roblox Studio?";
             }
 
             if (!response && lower.includes('thank')) {
-                response = "😊 You're welcome! Want another game idea?";
+                response = "😊 You're welcome! Need anything else?";
             }
 
-            if (!response && (lower.includes('joke') || lower.includes('funny'))) {
+            // Jokes
+            if (!response && lower.includes('joke')) {
                 response = random(jokes);
             }
 
-            if (!response && lower.includes('fact')) {
-                response = random(facts);
+            // ROBLOX STUDIO TUTORIALS - Priority!
+            if (!response) {
+                for (var key in studioTutorials) {
+                    if (lower.includes(key) || 
+                        (key === 'start' && (lower.includes('how to start') || lower.includes('getting started') || lower.includes('begin'))) ||
+                        (key === 'add part' && (lower.includes('add part') || lower.includes('create part') || lower.includes('make part'))) ||
+                        (key === 'script' && (lower.includes('how to script') || lower.includes('add script') || lower.includes('code'))) ||
+                        (key === 'color' && (lower.includes('change color') || lower.includes('paint'))) ||
+                        (key === 'move' && (lower.includes('make move') || lower.includes('movement'))) ||
+                        (key === 'teleport' && lower.includes('teleport')) ||
+                        (key === 'gui' && (lower.includes('make gui') || lower.includes('menu') || lower.includes('button'))) ||
+                        (key === 'sound' && (lower.includes('add sound') || lower.includes('music') || lower.includes('audio'))) ||
+                        (key === 'spawn' && (lower.includes('spawn point') || lower.includes('respawn'))) ||
+                        (key === 'lighting' && lower.includes('lighting')) ||
+                        (key === 'team' && lower.includes('team')) ||
+                        (key === 'leaderboard' && (lower.includes('leaderboard') || lower.includes('leaderstats'))) ||
+                        (key === 'collect' && (lower.includes('collectible') || lower.includes('coin'))) ||
+                        (key === 'tool' && lower.includes('tool')) ||
+                        (key === 'animation' && lower.includes('animation')) ||
+                        (key === 'camera' && lower.includes('camera')) ||
+                        (key === 'datastore' && (lower.includes('save') || lower.includes('data'))) ||
+                        (key === 'publish' && (lower.includes('publish') || lower.includes('upload'))) ||
+                        (key === 'test' && (lower.includes('test') || lower.includes('play'))) ||
+                        (key === 'anchor' && lower.includes('anchor')) ||
+                        (key === 'group' && lower.includes('group')) ||
+                        (key === 'transparent' && (lower.includes('transparent') || lower.includes('invisible'))) ||
+                        (key === 'resize' && (lower.includes('resize') || lower.includes('size')))
+                    ) {
+                        response = studioTutorials[key];
+                        break;
+                    }
+                }
             }
 
-            // GAME IDEAS - Check specific categories
+            // Game ideas
             if (!response && lower.includes('obby')) {
                 response = random(games.obby);
             }
             if (!response && lower.includes('simulator')) {
                 response = random(games.simulator);
             }
-            if (!response && lower.includes('adventure')) {
-                response = random(games.adventure);
-            }
-            if (!response && (lower.includes('racing') || lower.includes('race') || lower.includes('car'))) {
-                response = random(games.racing);
-            }
-            if (!response && (lower.includes('tycoon') || lower.includes('business'))) {
-                response = random(games.tycoon);
-            }
-            if (!response && (lower.includes('fighting') || lower.includes('battle'))) {
-                response = random(games.fighting);
-            }
-            if (!response && lower.includes('survival')) {
-                response = random(games.survival);
-            }
-            if (!response && lower.includes('puzzle')) {
-                response = random(games.puzzle);
-            }
-            if (!response && lower.includes('roleplay')) {
-                response = random(games.roleplay);
-            }
-
-            // General game idea
-            if (!response && (lower.includes('game') || lower.includes('roblox') || lower.includes('idea'))) {
-                var allGames = [].concat(
-                    games.obby, games.simulator, games.adventure, games.racing, 
-                    games.tycoon, games.fighting, games.survival, games.puzzle, 
-                    games.roleplay
-                );
+            if (!response && (lower.includes('game') || lower.includes('idea'))) {
+                var allGames = [].concat(games.obby, games.simulator);
                 response = random(allGames);
             }
 
@@ -413,7 +301,7 @@
 
             // Default
             if (!response) {
-                response = "🎮 I have 120+ game ideas!\n\nAsk for:\n• Obby ideas\n• Simulator ideas\n• Adventure ideas\n• Racing ideas\n• Tycoon ideas\n• Fighting ideas\n• Survival ideas\n• Puzzle ideas\n• Roleplay ideas\n\nOr ask science questions!";
+                response = "🎮 I can help with:\n\n• Game ideas (ask for 'obby idea')\n• How to start Roblox Studio\n• How to add parts/scripts\n• How to change colors\n• How to make things move\n• How to make teleporters\n• How to make GUI/menus\n• How to add sounds\n• How to make teams/leaderboards\n• Science questions\n\nWhat would you like to know?";
             }
 
             setTimeout(function() {
