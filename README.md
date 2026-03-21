@@ -108,237 +108,102 @@
     </div>
 
     <script>
-        // MEGA DATABASE - Roblox Studio + General Knowledge
-        var robloxAnswers = {
-            // Roblox Studio Basics
-            "start": "🎮 HOW TO START ROBLOX STUDIO:\n1. Download Roblox Studio (FREE)\n2. Open and click 'New'\n3. Choose 'Baseplate'\n4. Press F5 to test!\n5. Save with Ctrl+S",
+        // ROBLOX-FOCUSED DATABASE
+        var answers = {
+            // Roblox Studio - PRIORITY
+            "roblox": "I'm here to help with Roblox! I can teach you how to build games, script in Lua, create GUIs, make obbys, add sounds, create tools, and much more. What would you like to learn about Roblox Studio?",
             
-            "part": "🧱 ADD PARTS:\n1. Click 'Part' button\n2. Choose shape\n3. M = move, R = resize, T = rotate",
+            "start": "To get started with Roblox Studio:\n\n1. Download Roblox Studio for free from the Roblox website\n2. Open it and click 'New'\n3. Choose 'Baseplate' for a blank canvas\n4. Press F5 to test your game anytime\n5. Save regularly with Ctrl+S\n\nWhat would you like to build first?",
             
-            "script": "📝 HOW TO SCRIPT:\n1. Click part\n2. Press '+' in Explorer\n3. Choose 'Script'\n4. Type code!\n5. F5 to test",
+            "part": "To add parts in Roblox Studio:\n\n1. Click the 'Part' button in the Home tab\n2. Choose your shape: Block, Sphere, Cylinder, or Wedge\n3. Use the Move tool (M key) to position it\n4. Use the Scale tool (R key) to resize it\n5. Use the Rotate tool (T key) to turn it\n\nYou can copy parts with Ctrl+C and paste with Ctrl+V. Would you like to know more about building?",
             
-            // Kill/Damage
-            "lava": "🌋 MAKE LAVA:\n1. Part → orange/red\n2. Material = Neon\n3. Anchor it\n4. Script:\n\nscript.Parent.Touched:Connect(function(hit)\n    if hit.Parent:FindFirstChild('Humanoid') then\n        hit.Parent.Humanoid.Health = 0\n    end\nend)\n\n5. Add Fire!",
+            "script": "Here's how to add scripts in Roblox Studio:\n\n1. Select the part you want to add a script to\n2. Click the '+' button in the Explorer window next to the part\n3. Choose 'Script' for server-side code or 'LocalScript' for client-side\n4. The script editor will open where you can write Lua code\n5. Press F5 to test your script\n\nWould you like an example script to get started?",
+            
+            "lava": "Here's how to create a lava block that kills players:\n\n1. Insert a Part into your workspace\n2. Set the color to orange or red (BrickColor in Properties)\n3. Set Material to 'Neon' for a glowing effect\n4. Make sure it's Anchored (check the box in Properties)\n5. Add a Script to the part with this code:\n\nscript.Parent.Touched:Connect(function(hit)\n    if hit.Parent:FindFirstChild('Humanoid') then\n        hit.Parent.Humanoid.Health = 0\n    end\nend)\n\nOptionally, add a Fire object inside the part for visual flames! Would you like to know how to make other types of blocks?",
 
-            "kill": "☠️ KILL BLOCK:\n\nscript.Parent.Touched:Connect(function(hit)\n    if hit.Parent:FindFirstChild('Humanoid') then\n        hit.Parent.Humanoid.Health = 0\n    end\nend)",
+            "kill": "To create a kill block:\n\nAdd this script to any part:\n\nscript.Parent.Touched:Connect(function(hit)\n    if hit.Parent:FindFirstChild('Humanoid') then\n        hit.Parent.Humanoid.Health = 0\n    end\nend)\n\nThis detects when a player touches the part and sets their health to 0. Make the block red so players know it's dangerous!",
 
-            "damage": "💔 DAMAGE BLOCK:\n\nlocal damage = 10\nscript.Parent.Touched:Connect(function(hit)\n    if hit.Parent:FindFirstChild('Humanoid') then\n        hit.Parent.Humanoid.Health = hit.Parent.Humanoid.Health - damage\n    end\nend)",
+            "damage": "Here's how to make a damage block:\n\nlocal damage = 10  -- Change this number for more/less damage\n\nscript.Parent.Touched:Connect(function(hit)\n    if hit.Parent:FindFirstChild('Humanoid') then\n        hit.Parent.Humanoid.Health = hit.Parent.Humanoid.Health - damage\n    end\nend)\n\nThis removes 10 health each time the player touches it. You can adjust the damage variable to any number you want.",
 
-            // Boosts
-            "heal": "💚 HEALING BLOCK:\n\nlocal healAmount = 25\nscript.Parent.Touched:Connect(function(hit)\n    if hit.Parent:FindFirstChild('Humanoid') then\n        hit.Parent.Humanoid.Health = hit.Parent.Humanoid.Health + healAmount\n    end\nend)",
+            "heal": "To create a healing block:\n\nlocal healAmount = 25\n\nscript.Parent.Touched:Connect(function(hit)\n    if hit.Parent:FindFirstChild('Humanoid') then\n        hit.Parent.Humanoid.Health = hit.Parent.Humanoid.Health + healAmount\n    end\nend)\n\nMake the block green so players know it heals them. You can change healAmount to heal more or less health.",
 
-            "speed": "⚡ SPEED BOOST:\n\nlocal boost = 50\nscript.Parent.Touched:Connect(function(hit)\n    if hit.Parent:FindFirstChild('Humanoid') then\n        hit.Parent.Humanoid.WalkSpeed = hit.Parent.Humanoid.WalkSpeed + boost\n        wait(5)\n        hit.Parent.Humanoid.WalkSpeed = hit.Parent.Humanoid.WalkSpeed - boost\n    end\nend)",
+            "speed": "Here's how to make a speed boost pad:\n\nlocal speedBoost = 50\n\nscript.Parent.Touched:Connect(function(hit)\n    if hit.Parent:FindFirstChild('Humanoid') then\n        hit.Parent.Humanoid.WalkSpeed = hit.Parent.Humanoid.WalkSpeed + speedBoost\n        wait(5)\n        hit.Parent.Humanoid.WalkSpeed = hit.Parent.Humanoid.WalkSpeed - speedBoost\n    end\nend)\n\nThis gives players a speed boost for 5 seconds. The default WalkSpeed is 16, so this makes them run at 66 speed!",
 
-            "jump": "🦘 JUMP BOOST:\n\nlocal jumpBoost = 100\nscript.Parent.Touched:Connect(function(hit)\n    if hit.Parent:FindFirstChild('Humanoid') then\n        hit.Parent.Humanoid.JumpPower = hit.Parent.Humanoid.JumpPower + jumpBoost\n        wait(5)\n        hit.Parent.Humanoid.JumpPower = hit.Parent.Humanoid.JumpPower - jumpBoost\n    end\nend)",
+            "jump": "To create a jump boost pad:\n\nlocal jumpBoost = 100\n\nscript.Parent.Touched:Connect(function(hit)\n    if hit.Parent:FindFirstChild('Humanoid') then\n        hit.Parent.Humanoid.JumpPower = hit.Parent.Humanoid.JumpPower + jumpBoost\n        wait(5)\n        hit.Parent.Humanoid.JumpPower = hit.Parent.Humanoid.JumpPower - jumpBoost\n    end\nend)\n\nDefault JumpPower is 50, so this makes them jump much higher for 5 seconds!",
 
-            // Interactive
-            "door": "🚪 MAKE DOOR:\n\nlocal door = script.Parent\nlocal open = false\n\nscript.Parent.ClickDetector.MouseClick:Connect(function()\n    if open then\n        door.Transparency = 0\n        door.CanCollide = true\n        open = false\n    else\n        door.Transparency = 1\n        door.CanCollide = false\n        open = true\n    end\nend)",
+            "door": "Here's how to make a clickable door:\n\n1. Create your door part\n2. Add a ClickDetector to it\n3. Add this script:\n\nlocal door = script.Parent\nlocal open = false\n\nscript.Parent.ClickDetector.MouseClick:Connect(function()\n    if open then\n        door.Transparency = 0\n        door.CanCollide = true\n        open = false\n    else\n        door.Transparency = 1\n        door.CanCollide = false\n        open = true\n    end\nend)\n\nClicking the door toggles it between open (invisible) and closed (visible).",
 
-            "button": "🔘 MAKE BUTTON:\n\nscript.Parent.ClickDetector.MouseClick:Connect(function(player)\n    print(player.Name .. ' pressed button!')\nend)",
+            "button": "To create a button:\n\n1. Make a button-shaped part\n2. Add a ClickDetector to it\n3. Add this script:\n\nscript.Parent.ClickDetector.MouseClick:Connect(function(player)\n    print(player.Name .. ' pressed the button!')\n    -- Add what you want to happen here\nend)\n\nYou can make the button change color, activate a door, or trigger any event you want!",
 
-            "teleport": "✨ TELEPORTER:\n\nlocal endPart = workspace.EndPart\nscript.Parent.Touched:Connect(function(hit)\n    if hit.Parent:FindFirstChild('Humanoid') then\n        hit.Parent:MoveTo(endPart.Position + Vector3.new(0, 3, 0))\n    end\nend)",
+            "teleport": "Here's how to make a teleporter:\n\n1. Create two parts - a teleporter entrance and exit\n2. Name the exit part 'EndPart' in the Explorer\n3. Add this script to the entrance part:\n\nlocal endPart = workspace.EndPart\n\nscript.Parent.Touched:Connect(function(hit)\n    if hit.Parent:FindFirstChild('Humanoid') then\n        hit.Parent:MoveTo(endPart.Position + Vector3.new(0, 3, 0))\n    end\nend)\n\nMake both parts glow with a PointLight for a cool effect!",
 
-            "checkpoint": "🚩 CHECKPOINT:\n\n1. Insert SpawnLocation\n2. Color it differently\n3. Duration = 0\n4. Anchor it!",
+            "checkpoint": "To make checkpoints:\n\n1. Go to the Model tab and click 'Spawn' (or insert a SpawnLocation)\n2. Move it to where you want players to respawn\n3. Change its color in Properties (different color for each checkpoint)\n4. Set Duration to 0 for instant respawn\n5. Make sure it's Anchored\n\nPlayers will respawn at the last checkpoint they touched!",
 
-            // Movement
-            "moving platform": "🔄 MOVING PLATFORM:\n\nlocal platform = script.Parent\nlocal startPos = platform.Position\nlocal endPos = startPos + Vector3.new(20, 0, 0)\n\nwhile true do\n    platform.Position = endPos\n    wait(3)\n    platform.Position = startPos\n    wait(3)\nend",
+            "moving platform": "Here's how to make a moving platform:\n\nlocal platform = script.Parent\nlocal startPos = platform.Position\nlocal endPos = startPos + Vector3.new(20, 0, 0)  -- Moves 20 studs in X direction\n\nwhile true do\n    platform.Position = endPos\n    wait(3)\n    platform.Position = startPos\n    wait(3)\nend\n\nFor smooth movement, use TweenService instead of direct position changes!",
 
-            "spinning": "🌀 SPINNING:\n\nwhile true do\n    wait(0.01)\n    script.Parent.CFrame = script.Parent.CFrame * CFrame.Angles(0, 0.1, 0)\nend",
+            "spinning": "To make a part spin continuously:\n\nwhile true do\n    wait(0.01)\n    script.Parent.CFrame = script.Parent.CFrame * CFrame.Angles(0, 0.1, 0)\nend\n\nChange the 0.1 value to adjust rotation speed. Higher = faster spinning.",
 
-            "disappearing": "👻 DISAPPEARING PLATFORM:\n\nscript.Parent.Touched:Connect(function()\n    wait(0.5)\n    script.Parent.Transparency = 1\n    script.Parent.CanCollide = false\n    wait(3)\n    script.Parent.Transparency = 0\n    script.Parent.CanCollide = true\nend)",
+            "disappearing": "Here's how to make a disappearing platform:\n\nscript.Parent.Touched:Connect(function()\n    wait(0.5)  -- Wait half second before disappearing\n    script.Parent.Transparency = 1\n    script.Parent.CanCollide = false\n    wait(3)  -- Wait 3 seconds\n    script.Parent.Transparency = 0\n    script.Parent.CanCollide = true\nend)\n\nThe platform disappears when touched and reappears after 3 seconds.",
 
-            // Collectibles
-            "coin": "💰 COIN:\n\nscript.Parent.Touched:Connect(function(hit)\n    local player = game.Players:GetPlayerFromCharacter(hit.Parent)\n    if player then\n        player.leaderstats.Coins.Value = player.leaderstats.Coins.Value + 1\n        script.Parent:Destroy()\n    end\nend)",
+            "coin": "To create collectible coins:\n\nscript.Parent.Touched:Connect(function(hit)\n    local player = game.Players:GetPlayerFromCharacter(hit.Parent)\n    if player then\n        player.leaderstats.Coins.Value = player.leaderstats.Coins.Value + 1\n        script.Parent:Destroy()\n    end\nend)\n\nMake the coin yellow and add a spinning script for a classic coin effect!",
 
-            "gem": "💎 GEM:\n\nlocal value = 10\nscript.Parent.Touched:Connect(function(hit)\n    local player = game.Players:GetPlayerFromCharacter(hit.Parent)\n    if player then\n        player.leaderstats.Coins.Value = player.leaderstats.Coins.Value + value\n        script.Parent:Destroy()\n    end\nend)",
+            "gem": "For collectible gems worth more points:\n\nlocal gemValue = 10\n\nscript.Parent.Touched:Connect(function(hit)\n    local player = game.Players:GetPlayerFromCharacter(hit.Parent)\n    if player then\n        player.leaderstats.Coins.Value = player.leaderstats.Coins.Value + gemValue\n        script.Parent:Destroy()\n    end\nend)\n\nMake gems different colors and values for variety!",
 
-            // Effects
-            "fire": "🔥 ADD FIRE:\n1. Select part\n2. Insert → Fire\n3. Customize Size, Heat, Color",
+            "fire": "To add fire effects:\n\n1. Select your part\n2. Click the '+' in Explorer next to the part\n3. Choose 'Fire'\n4. Customize in Properties:\n   - Size: how big the flames are\n   - Heat: how high flames rise\n   - Color: flame color\n\nGreat for lava, torches, campfires, or adding danger to obstacles!",
 
-            "light": "💡 ADD LIGHT:\n1. Select part\n2. Insert → PointLight\n3. Change Brightness, Range, Color",
+            "light": "To add lighting effects:\n\n1. Select your part\n2. Insert a PointLight\n3. Customize in Properties:\n   - Brightness: light intensity\n   - Range: how far the light reaches\n   - Color: light color\n\nUse lights to make parts glow, create atmosphere, or highlight important areas!",
 
-            "explosion": "💥 EXPLOSION:\n\nscript.Parent.Touched:Connect(function(hit)\n    if hit.Parent:FindFirstChild('Humanoid') then\n        local boom = Instance.new('Explosion')\n        boom.Position = script.Parent.Position\n        boom.Parent = workspace\n        script.Parent:Destroy()\n    end\nend)",
+            "explosion": "Here's how to create an explosion:\n\nscript.Parent.Touched:Connect(function(hit)\n    if hit.Parent:FindFirstChild('Humanoid') then\n        local explosion = Instance.new('Explosion')\n        explosion.Position = script.Parent.Position\n        explosion.Parent = workspace\n        script.Parent:Destroy()\n    end\nend)\n\nThe explosion affects nearby players and parts!",
 
-            // GUI
-            "gui": "📱 MAKE GUI:\n1. StarterGui → ScreenGui\n2. Add TextButton\n3. LocalScript:\n\nscript.Parent.MouseButton1Click:Connect(function()\n    print('Clicked!')\nend)",
+            "gui": "To create a GUI (screen interface):\n\n1. In StarterGui, insert a ScreenGui\n2. Add a TextButton or TextLabel inside it\n3. Customize text, size, and color in Properties\n4. For clickable buttons, add a LocalScript:\n\nscript.Parent.MouseButton1Click:Connect(function()\n    print('Button clicked!')\n    -- Add your code here\nend)\n\nGUIs are great for health bars, shops, menus, and instructions!",
 
-            "shop": "🏪 SHOP GUI:\n\nlocal button = script.Parent\nlocal price = 100\n\nbutton.MouseButton1Click:Connect(function()\n    local player = game.Players.LocalPlayer\n    if player.leaderstats.Coins.Value >= price then\n        player.leaderstats.Coins.Value = player.leaderstats.Coins.Value - price\n        print('Bought!')\n    end\nend)",
+            "shop": "To create a shop GUI:\n\nlocal button = script.Parent\nlocal price = 100\n\nbutton.MouseButton1Click:Connect(function()\n    local player = game.Players.LocalPlayer\n    if player.leaderstats.Coins.Value >= price then\n        player.leaderstats.Coins.Value = player.leaderstats.Coins.Value - price\n        print('Item purchased!')\n        -- Give the player their item here\n    else\n        print('Not enough coins!')\n    end\nend)\n\nThis checks if the player has enough coins before purchasing.",
 
-            // Systems
-            "leaderboard": "📊 LEADERBOARD:\n\nIn ServerScriptService:\n\ngame.Players.PlayerAdded:Connect(function(player)\n    local stats = Instance.new('Folder')\n    stats.Name = 'leaderstats'\n    stats.Parent = player\n    \n    local coins = Instance.new('IntValue')\n    coins.Name = 'Coins'\n    coins.Value = 0\n    coins.Parent = stats\nend)",
+            "leaderboard": "To create a leaderboard:\n\nIn ServerScriptService, add this script:\n\ngame.Players.PlayerAdded:Connect(function(player)\n    local leaderstats = Instance.new('Folder')\n    leaderstats.Name = 'leaderstats'\n    leaderstats.Parent = player\n    \n    local coins = Instance.new('IntValue')\n    coins.Name = 'Coins'\n    coins.Value = 0\n    coins.Parent = leaderstats\nend)\n\nThis creates a leaderboard that shows on the right side of the screen!",
 
-            "team": "👥 TEAMS:\n1. Insert Teams service\n2. Add Team objects\n3. Set TeamColor\n4. Script:\n\ngame.Players.PlayerAdded:Connect(function(player)\n    player.Team = game.Teams.RedTeam\nend)",
+            "team": "To create teams:\n\n1. Insert the Teams service in Explorer\n2. Add Team objects inside Teams\n3. Set TeamColor for each team\n4. Name your teams (Red Team, Blue Team, etc.)\n5. Use this script to assign players:\n\ngame.Players.PlayerAdded:Connect(function(player)\n    player.Team = game.Teams.RedTeam\nend)\n\nTeams are great for competitive games!",
 
-            "sound": "🔊 ADD SOUND:\n1. Insert Sound in part\n2. SoundId = rbxassetid://12345\n3. Script: script.Parent.Sound:Play()",
+            "sound": "To add sounds:\n\n1. Find a sound on the Roblox website and copy its ID number\n2. Insert a Sound object into a part\n3. Paste the ID in SoundId property: rbxassetid://12345\n4. Use this script to play it:\n\nscript.Parent.Sound:Play()\n\nSet Looped = true for background music!",
 
-            // Tools
-            "sword": "⚔️ SWORD:\n1. Insert Tool\n2. Part named 'Handle'\n3. Script:\n\nlocal damage = 10\nscript.Parent.Handle.Touched:Connect(function(hit)\n    if hit.Parent:FindFirstChild('Humanoid') then\n        hit.Parent.Humanoid:TakeDamage(damage)\n    end\nend)",
+            "sword": "To create a basic sword:\n\n1. Insert a Tool in StarterPack\n2. Add a Part inside it named 'Handle'\n3. Shape it like a sword\n4. Add this script to the Tool:\n\nlocal tool = script.Parent\nlocal damage = 10\n\ntool.Handle.Touched:Connect(function(hit)\n    if tool.Parent:IsA('Model') and hit.Parent:FindFirstChild('Humanoid') then\n        hit.Parent.Humanoid:TakeDamage(damage)\n    end\nend)\n\nPlayers can swing it to damage others!",
 
-            "tool": "🔧 TOOL:\n1. Insert Tool in StarterPack\n2. Add Part named 'Handle'\n3. Script:\n\nscript.Parent.Activated:Connect(function()\n    print('Tool used!')\nend)"
+            "tool": "To create a basic tool:\n\n1. Insert a Tool in StarterPack\n2. Add a Part named 'Handle' inside it\n3. Add a Script to the Tool:\n\nlocal tool = script.Parent\n\ntool.Activated:Connect(function()\n    print('Tool activated!')\n    -- Add what the tool does here\nend)\n\nTools can be anything: swords, flashlights, building tools, etc!",
+
+            // General knowledge - still available but less prominent
+            "sky blue": "The sky appears blue due to Rayleigh scattering. When sunlight enters Earth's atmosphere, it collides with air molecules. Blue light has a shorter wavelength and scatters more than other colors, which is why we see blue throughout the sky. During sunset, light travels through more atmosphere, causing reds and oranges to dominate.",
+            
+            "gravity": "Gravity is a fundamental force that attracts objects with mass toward each other. Earth's gravity keeps us grounded and gives objects weight. The strength of gravity depends on mass and distance - more massive objects have stronger gravity, and gravity weakens with distance.",
+            
+            "planets": "Our solar system has 8 planets: Mercury (smallest, closest to sun), Venus (hottest), Earth (only planet with life), Mars (red planet), Jupiter (largest), Saturn (famous rings), Uranus (tilted sideways), and Neptune (windiest, farthest). Pluto is now classified as a dwarf planet.",
+            
+            "photosynthesis": "Photosynthesis is the process plants use to convert sunlight into energy. They take in carbon dioxide from air and water from soil, using sunlight to create glucose (sugar) for food and release oxygen as a byproduct. This happens in chloroplasts containing chlorophyll, the green pigment in plants.",
+            
+            "dinosaurs extinct": "Dinosaurs went extinct approximately 65 million years ago, most likely due to a massive asteroid impact in what is now Mexico. This caused widespread devastation: tsunamis, wildfires, and dust blocking sunlight for years. Plants died, then herbivores, then carnivores. Birds, which evolved from theropod dinosaurs, survived.",
+            
+            "fastest animal": "The cheetah is the fastest land animal, reaching speeds up to 70 mph. However, the peregrine falcon is the fastest animal overall, diving at speeds exceeding 240 mph. In water, the sailfish swims at about 68 mph."
         };
 
-        // GENERAL KNOWLEDGE - Can answer ANYTHING!
-        var generalKnowledge = {
-            // Science
-            "sky blue": "🌤️ The sky is blue because of Rayleigh scattering! When sunlight enters Earth's atmosphere, it hits tiny air molecules. Blue light has shorter wavelengths and scatters more easily than other colors, so we see blue everywhere! At sunset, light travels through more atmosphere, so we see reds and oranges instead!",
+        var gameIdeas = [
+            "Here's a Roblox game idea: SPEED OBBY - Create an obby with moving platforms that accelerate over time, boost pads, slow zones, and checkpoints every 10 obstacles. Include difficulty levels from Easy to INSANE, with a leaderboard for fastest times and secret shortcuts for skilled players!",
             
-            "planes fly": "✈️ Planes fly because of lift! Wings are curved on top and flat on bottom. Air moves faster over the curved top, creating lower pressure above the wing. Higher pressure below pushes the wing up! Engines provide forward thrust.",
+            "Game idea: MEGA PET SIMULATOR - Players collect 100+ pets ranging from common to mythical, with a 3-stage evolution system. Include mini-games like fetch, agility courses, and races. Add breeding mechanics for rare combinations and a trading system!",
             
-            "gravity": "🌍 Gravity is a force that pulls objects with mass together! Earth's massive size creates strong gravity that keeps us on the ground. Everything with mass has gravity - even you! But you'd need to be planet-sized for your gravity to be noticeable.",
+            "Try this: PIZZA EMPIRE - Players start with a small pizza stand and build a restaurant empire. Include 50+ toppings, hiring staff (chefs, drivers, cashiers), upgrading equipment, and expanding to multiple locations. Add a delivery mini-game and pizza-making competitions!",
             
-            "photosynthesis": "🌱 Photosynthesis is how plants make food from sunlight! Plants use sunlight, water, and CO2 to create glucose (food) and oxygen (for us to breathe!). It happens in chloroplasts using chlorophyll (the green pigment).",
+            "How about: TREASURE ISLAND QUEST - Create a massive island with 20+ locations where players find treasure map pieces, solve riddles and puzzles, and explore caves and temples. Include ancient traps, a boss Guardian, and hidden treasure rooms!",
             
-            "rainbow": "🌈 Rainbows form when sunlight shines through water droplets! Light enters the droplet and bends (refracts), reflects off the back, and bends again coming out. Each color bends at different angles, creating: Red, Orange, Yellow, Green, Blue, Indigo, Violet!",
-            
-            "thunder": "⚡ Thunder is the sound of lightning heating air! Lightning is incredibly hot (30,000°F - 5 times hotter than the sun's surface!). This superheats air so fast it explodes outward, creating the BOOM you hear!",
-            
-            "seasons": "🍂 Seasons happen because Earth is tilted 23.5 degrees! As Earth orbits the sun, different parts tilt toward or away from it. Summer = tilt toward sun (more direct sunlight). Winter = tilt away (less direct sunlight).",
-            
-            "rain": "🌧️ Rain forms when water vapor condenses in clouds! Warm air rises carrying water vapor. High up where it's cold, vapor condenses around tiny particles forming water droplets. When drops get too heavy, they fall as rain!",
-            
-            "volcanoes": "🌋 Volcanoes form when hot molten rock (magma) erupts from underground! Earth's crust has cracks where tectonic plates meet. Magma pushes through these cracks. Pressure builds and BOOM - eruption!",
-            
-            "earthquakes": "📊 Earthquakes happen when tectonic plates suddenly shift! Earth's crust is broken into huge plates. They constantly move slowly. Sometimes they get stuck. Pressure builds... then SNAP! They suddenly slip, releasing energy as seismic waves.",
-            
-            "moon phases": "🌙 Moon phases show how much sunlight we see on the moon! New Moon = dark side faces us. Full Moon = fully lit side faces us. The moon doesn't glow - it reflects sunlight! Takes 29.5 days for complete cycle.",
-            
-            "stars twinkle": "⭐ Stars twinkle because of Earth's atmosphere! Starlight travels through layers of moving air with different temperatures. This bends the light rapidly in different directions, making stars appear to twinkle. In space, stars don't twinkle!",
-            
-            "magnets": "🧲 Magnets work because tiny atoms inside line up! In magnetic materials, atoms act like mini magnets. When they line up in the same direction, they create a strong magnetic field. Opposite poles attract, same poles repel!",
-            
-            "electricity": "⚡ Electricity is the flow of electrons! Electrons are tiny negative particles in atoms. Current = electrons flowing through wire. Voltage = pressure pushing electrons. Conductors (like copper) let electrons flow easily.",
-            
-            "dna": "🧬 DNA is your genetic blueprint! It's a double helix (twisted ladder) made of base pairs: A-T and G-C. Every cell has a complete copy. Genes are sections of DNA that code for traits. You share 99.9% DNA with all humans, 98.8% with chimps!",
-            
-            "atoms": "⚛️ Atoms are building blocks of everything! They have protons (+), neutrons (neutral) in the nucleus, and electrons (-) orbiting. They're tiny - 100 million atoms fit on a pencil tip! Mostly empty space (99.9999%)!",
-
-            // Animals
-            "fastest animal": "🐆 Land: Cheetah at 70 mph! Can accelerate 0-60 in 3 seconds!\n🦅 Air: Peregrine falcon diving at 240+ mph!\n🐟 Water: Sailfish at 68 mph!",
-            
-            "biggest animal": "🐋 Blue whale - biggest animal EVER! Even bigger than any dinosaur! Length: up to 100 feet (3 school buses!), Weight: 200 tons (33 elephants!), Heart: size of small car, Tongue: weighs as much as an elephant!",
-            
-            "smallest animal": "🦟 Smallest mammal: Bumblebee bat (1 inch!)\n🐸 Smallest vertebrate: Paedophryne frog (7mm - size of housefly!)\n🦠 Smallest overall: Tardigrades/water bears (microscopic!)",
-            
-            "pandas eat": "🐼 Pandas eat bamboo - 26-84 pounds daily! They spend 12-16 hours a day eating. Even though they're bears, 99% of their diet is bamboo. They have a 'thumb' (modified wrist bone) to grip bamboo!",
-            
-            "penguins fly": "🐧 Penguins can't fly in AIR, but they FLY underwater! Wings evolved into flippers. They 'fly' through water at 15-25 mph. Some species reach 22 mph underwater. They traded flight for incredible swimming ability!",
-            
-            "dogs live": "🐕 Dog lifespan depends on size:\nSmall dogs: 12-20 years\nMedium dogs: 10-15 years\nLarge dogs: 10-13 years\nGiant dogs: 7-10 years\n\nLongest living dog: Bluey lived 29 years!",
-            
-            "cats purr": "😺 Cats purr by vibrating their larynx muscles! 25-150 vibrations per second. They purr when happy, want attention, nursing, sometimes when injured (healing). Purring may help heal bones and reduce stress!",
-            
-            "sharks old": "🦈 Sharks are ANCIENT - older than trees! First appeared 400 million years ago. Trees appeared 350 million years ago. Greenland sharks can live 400+ years (oldest living vertebrate!).",
-            
-            "dolphins smart": "🐬 Dolphins are incredibly intelligent! They use tools, have names for each other, recognize themselves in mirrors, play games, communicate with clicks/whistles, help injured dolphins and humans, learn quickly, solve puzzles!",
-            
-            "elephants": "🐘 Elephant facts: Exceptional memory, mourn their dead, live in matriarchal herds, use infrasound communication, use tools, self-aware, pregnancy lasts 22 months, trunk has 40,000 muscles!",
-            
-            "bees": "🐝 Bees are amazing! Colony has Queen, Drones, and Workers. Workers do all the work. Waggle dance tells others where flowers are. They pollinate 1/3 of our food crops. Population declining - we need to protect them!",
-
-            // Space
-            "sun size": "☀️ The sun is MASSIVE! Diameter: 864,000 miles (109x Earth!), Volume: 1.3 million Earths could fit inside! Mass: 333,000 times Earth's mass, Temperature: Surface 10,000°F, Core 27 million°F!",
-            
-            "planets": "🪐 8 planets in our solar system:\n1. Mercury - smallest, closest to sun\n2. Venus - hottest (900°F!), toxic atmosphere\n3. Earth - only planet with life!\n4. Mars - red planet, ice caps\n5. Jupiter - BIGGEST!\n6. Saturn - famous rings!\n7. Uranus - tilted sideways\n8. Neptune - windiest, farthest\n\nPluto is a dwarf planet now!",
-            
-            "black hole": "⚫ Black holes have gravity SO strong nothing escapes - not even light! They form when massive stars collapse. Event Horizon = point of no return. If you fell in, you'd be 'spaghettified' - stretched like spaghetti!",
-            
-            "mars": "🔴 Mars - The Red Planet! Red from iron oxide (rust!) in soil. Day: 24.6 hours (similar to Earth!). Atmosphere: 95% CO2, very thin. Temperature: -80°F average. Moons: 2 (Phobos and Deimos). Water: ice at poles!",
-            
-            "moon landing": "🌙 Moon landing (Apollo 11 - July 20, 1969): Astronauts Neil Armstrong and Buzz Aldrin landed. First words: 'That's one small step for man, one giant leap for mankind'. Brought back 47 pounds of moon rocks. Footprints still there!",
-
-            // Math
-            "pi": "🥧 Pi (π) = 3.14159265359... It's the ratio of a circle's circumference to diameter. Never ends, infinite decimal digits that never repeat! We use it to calculate circles, spheres, waves. Pi Day is March 14 (3/14)!",
-            
-            "infinity": "♾️ Infinity means endless - no end! It's not a number, it's a concept. You can't count to it. Infinity + 1 = still infinity! There are even different sizes of infinity (mind-blowing!).",
-            
-            "zero": "0️⃣ Zero revolutionized math! Invented in India ~500 AD. It's a placeholder AND a number. Made place-value system possible (10, 100, 1000). 5 + 0 = 5, 5 × 0 = 0, 5 ÷ 0 = undefined!",
-            
-            "fractions": "🍕 Fractions are parts of a whole! Like 3/8 of a pizza. Top (numerator) = parts you have. Bottom (denominator) = total parts. 1/2 = 0.5, 1/4 = 0.25, 3/4 = 0.75!",
-            
-            "percentage": "💯 Percentages are parts per hundred! 50% = 50/100 = 0.5 = half. To find 20% of 50: (20/100) × 50 = 10. 100%=all, 50%=half, 25%=quarter!",
-
-            // History
-            "dinosaurs extinct": "🦕 Dinosaurs went extinct 65 million years ago! Most likely from asteroid impact (10km wide) that hit Mexico. Caused massive explosions, tsunamis, wildfires, dust blocked sun for years. Plants died → herbivores died → carnivores died. Birds survived!",
-            
-            "pyramids built": "🏛️ Egyptian pyramids built ~4,500 years ago! Great Pyramid has 2.3 million stone blocks, each 2.5 tons. Built by 20,000-30,000 skilled laborers (NOT slaves!). Took 20-30 years. Used ramps, levers, sleds. No aliens needed!",
-            
-            "great wall": "🏯 Great Wall of China: Length 13,000+ miles! Built over 2,000+ years by different dynasties. Purpose: protect from invasions, control trade. Myth BUSTED: Can't see from space with naked eye!",
-
-            // Life Skills
-            "make friends": "👥 Making friends tips:\n1. Be yourself - genuine people attract real friends\n2. Show interest in others - ask questions\n3. Be a good listener\n4. Join clubs or activities you enjoy\n5. Be kind and positive\n6. Don't force it - friendships take time\n7. Smile and be approachable!\n\nQuality over quantity!",
-            
-            "study better": "📚 Study tips:\n1. Remove distractions (phone away!)\n2. Take breaks every 25-30 minutes\n3. Teach someone else (best way to learn)\n4. Use flashcards for memorization\n5. Study in different locations\n6. Get enough sleep!\n7. Practice, don't just read\n8. Ask questions when confused",
-            
-            "be confident": "💪 Building confidence:\n1. Practice what you're nervous about\n2. Focus on what you CAN do\n3. Set small achievable goals\n4. Celebrate small wins\n5. Take care of yourself\n6. Remember: everyone feels nervous sometimes\n7. Fake it till you make it\n8. Learn from mistakes, don't fear them",
-
-            // Food & Cooking
-            "pizza": "🍕 Pizza originated in Naples, Italy! Modern pizza with tomatoes became popular in the 1700s. First pizzeria opened 1830. Pizza Margherita (tomato, mozzarella, basil) was created for Queen Margherita in 1889!",
-            
-            "chocolate": "🍫 Chocolate comes from cacao beans! Grows on cacao trees in tropical regions. Beans are fermented, dried, roasted, and ground. Takes about 400 beans to make 1 pound of chocolate! Dark chocolate has health benefits!",
-            
-            "ice cream": "🍦 Ice cream dates back to ancient China! Modern ice cream became popular in 1600s Europe. Vanilla is most popular flavor worldwide! Ice cream is 50% air (that's why it's light and creamy)!",
-
-            // Sports
-            "basketball": "🏀 Basketball invented in 1891 by James Naismith! Originally used peach baskets. NBA founded 1946. Teams have 5 players on court. Game is 4 quarters, 12 minutes each (NBA). Popular worldwide!",
-            
-            "soccer": "⚽ Soccer (football) is world's most popular sport! Played in 200+ countries. 11 players per team. Game is 90 minutes (2 halves of 45). World Cup every 4 years is biggest sporting event!",
-            
-            "olympics": "🏅 Olympics started in ancient Greece 776 BC! Modern Olympics began 1896 in Athens. Summer and Winter Olympics alternate every 2 years. Represents unity through sports!",
-
-            // Technology
-            "internet": "💻 Internet started in 1960s as ARPANET (military project). Connected computers to share info. Tim Berners-Lee invented World Wide Web in 1989. Now billions use it daily!",
-            
-            "computer": "🖥️ Modern computers evolved from 1940s! First computers filled entire rooms. Now we have powerful computers in our pockets (smartphones!). They use binary (0s and 1s) for everything!",
-            
-            "phone": "📱 Alexander Graham Bell invented telephone in 1876! Mobile phones became popular in 1980s-90s. Smartphones (2007 with iPhone) changed everything. Now phones are mini computers!",
-
-            // Nature
-            "trees": "🌳 Trees produce oxygen and absorb CO2! They provide homes for animals, prevent soil erosion, give us fruit/nuts/wood. Oldest tree is 5,000+ years old! Trees communicate through underground fungal networks!",
-            
-            "ocean": "🌊 Oceans cover 71% of Earth! Average depth: 12,100 feet. Deepest point: Mariana Trench (36,000 feet!). Oceans produce 50%+ of Earth's oxygen. Only 5% explored!",
-            
-            "mountains": "🏔️ Mountains form from tectonic plates colliding! Himalayas still growing! Mount Everest is tallest at 29,032 feet. Mountains affect weather and climate. Home to unique ecosystems!",
-
-            // Countries & Geography
-            "countries": "🌍 There are 195 countries in the world! Biggest: Russia (6.6 million square miles). Smallest: Vatican City (0.17 square miles!). Most populous: India (1.4+ billion people)!",
-            
-            "continents": "🌎 7 continents: Asia (biggest), Africa, North America, South America, Antarctica, Europe, Australia (smallest). Asia has 60% of world's population!",
-
-            // Weather
-            "tornado": "🌪️ Tornadoes are rotating columns of air! Form from severe thunderstorms. Wind speeds can reach 300+ mph! Rated EF0-EF5 (EF5 most destructive). Most common in USA's 'Tornado Alley'!",
-            
-            "hurricane": "🌀 Hurricanes are massive tropical storms! Form over warm ocean water. Need water 80°F+ to form. Wind speeds 74+ mph. Categorized 1-5 (5 is strongest). Also called typhoons or cyclones!",
-            
-            "snow": "❄️ Snow forms when water vapor freezes into ice crystals in clouds! Crystals stick together forming snowflakes. Each snowflake is unique! Temperature must be 32°F or below. Takes millions of crystals to make snowball!",
-
-            // Music
-            "music": "🎵 Music uses sound organized in time! Elements: rhythm, melody, harmony, dynamics. Earliest instruments: flutes from 40,000 years ago! Music affects emotions and brain chemistry!",
-            
-            "piano": "🎹 Piano invented ~1700 by Bartolomeo Cristofori! Has 88 keys (52 white, 36 black). Can play loud or soft (that's why called pianoforte = soft-loud in Italian)!",
-
-            // Art
-            "painting": "🎨 Painting is applying pigment to surface! Techniques: oil, watercolor, acrylic, spray. Famous painters: Leonardo da Vinci, Van Gogh, Picasso, Monet. Art expresses ideas and emotions!",
-            
-            "colors": "🌈 Primary colors: Red, Yellow, Blue (can't be made by mixing). Secondary: Orange (red+yellow), Green (yellow+blue), Purple (blue+red). Colors affect mood and emotions!"
-        };
-
-        var games = [
-            "🏃 SPEED OBBY: Racing with moving platforms!",
-            "🍕 PIZZA SIMULATOR: Run pizza shop!",
-            "🐾 PET SIMULATOR: Collect 100+ pets!",
-            "⚔️ SWORD FIGHTER: Battle with swords!",
-            "🏎️ KART RACING: Race on tracks!"
+            "Consider: TURBO KART RACING - Design 20 unique tracks (city, beach, volcano, space, jungle, underwater) with 50+ customizable karts. Add power-ups like rockets, shields, and speed boosts. Include championship mode, time trials, and 8-player multiplayer races!"
         ];
 
         var jokes = [
-            "Why don't scientists trust atoms? Because they make up everything! 😄",
-            "What do you call a bear with no teeth? A gummy bear! 🐻",
-            "Why did the bicycle fall over? It was two-tired! 🚲",
-            "What do you call a fake noodle? An impasta! 🍝",
-            "What did the ocean say to the beach? Nothing, it just waved! 🌊"
+            "Why don't scientists trust atoms? Because they make up everything!",
+            "What do you call a bear with no teeth? A gummy bear!",
+            "Why did the bicycle fall over? It was two-tired!",
+            "What do you call a fake noodle? An impasta!",
+            "What did the ocean say to the beach? Nothing, it just waved!"
         ];
 
-        addBot("👋 Hey! I'm your AI Chatbot!\n\n🎮 I specialize in Roblox Studio but can answer ANY question!\n\nAsk about:\n• How to make things in Roblox\n• Science, animals, space\n• Math, history, geography\n• Life advice, study tips\n• Sports, music, art\n• Literally anything!\n\nWhat would you like to know?");
+        addBot("Hello! I'm an AI assistant specializing in Roblox Studio development. I can help you learn how to build games, write scripts, create mechanics, and bring your game ideas to life.\n\nI can also answer general questions about science, math, history, and more.\n\nWhat would you like to know?");
 
         function addBot(text) {
             var div = document.createElement('div');
@@ -375,17 +240,17 @@
             if (lower.match(/\d+\s*[\+\-\*\/]\s*\d+/)) {
                 try {
                     var result = eval(lower.replace(/[^0-9+\-*/().]/g, ''));
-                    response = "🧮 " + lower + " = " + result;
+                    response = "The answer is " + result + ".";
                 } catch(e) {}
             }
 
             // Greetings
             if (!response && (lower.includes('hello') || lower.includes('hi') || lower.includes('hey'))) {
-                response = "👋 Hey! Ask me about Roblox Studio or ANY question you have!";
+                response = "Hello! How can I assist you today? I specialize in Roblox Studio development but can help with other topics as well.";
             }
 
             if (!response && lower.includes('thank')) {
-                response = "😊 You're welcome! What else can I help with?";
+                response = "You're welcome! Feel free to ask if you need anything else.";
             }
 
             // Jokes
@@ -395,35 +260,25 @@
 
             // Game ideas
             if (!response && (lower.includes('game idea') || lower.includes('obby') || lower.includes('simulator'))) {
-                response = random(games);
+                response = random(gameIdeas);
             }
 
-            // Check ROBLOX answers first (priority)
+            // Check answers database
             if (!response) {
-                for (var key in robloxAnswers) {
+                for (var key in answers) {
                     if (lower.includes(key) || 
                         lower.includes('make ' + key) || 
                         lower.includes('create ' + key) ||
                         lower.includes('how to ' + key)) {
-                        response = robloxAnswers[key];
+                        response = answers[key];
                         break;
                     }
                 }
             }
 
-            // Then check GENERAL knowledge
+            // Default response
             if (!response) {
-                for (var key in generalKnowledge) {
-                    if (lower.includes(key)) {
-                        response = generalKnowledge[key];
-                        break;
-                    }
-                }
-            }
-
-            // Default
-            if (!response) {
-                response = "🤔 I can help with:\n\n🎮 Roblox Studio (how to make lava, doors, coins, etc)\n🔬 Science (why sky is blue, gravity, photosynthesis)\n🐾 Animals (fastest, biggest, how they work)\n🌌 Space (planets, sun, black holes)\n🧮 Math (calculations, fractions, percentages)\n📚 History (dinosaurs, pyramids, inventions)\n🌍 Geography (countries, continents, mountains)\n⚽ Sports (basketball, soccer, olympics)\n🎨 Art & Music\n💡 Life advice\n\nWhat would you like to know?";
+                response = "I can help you with:\n\n• Roblox Studio development (building, scripting, GUIs, game mechanics)\n• Game ideas and design concepts\n• Science, math, and general knowledge questions\n\nWhat would you like to learn about?";
             }
 
             setTimeout(function() {
@@ -439,3 +294,80 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
