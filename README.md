@@ -1,7 +1,6 @@
-<!DOCTYPE html>
 <html>
 <head>
-    <title>Roblox AI Helper</title>
+    <title>AI Chatbot</title>
     <style>
         body {
             font-family: Arial;
@@ -98,7 +97,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>🎮 Roblox AI Helper</h1>
+        <h1>AI Chatbot</h1>
         
         <div class="chat">
             <div id="messages"></div>
@@ -339,7 +338,7 @@
             "What did the ocean say to the beach? Nothing, it just waved! 🌊"
         ];
 
-        addBot("👋 Hey! I'm your AI Helper!\n\n🎮 I specialize in Roblox Studio but can answer ANY question!\n\nAsk about:\n• How to make things in Roblox\n• Science, animals, space\n• Math, history, geography\n• Life advice, study tips\n• Sports, music, art\n• Literally anything!\n\nWhat would you like to know?");
+        addBot("👋 Hey! I'm your AI Chatbot!\n\n🎮 I specialize in Roblox Studio but can answer ANY question!\n\nAsk about:\n• How to make things in Roblox\n• Science, animals, space\n• Math, history, geography\n• Life advice, study tips\n• Sports, music, art\n• Literally anything!\n\nWhat would you like to know?");
 
         function addBot(text) {
             var div = document.createElement('div');
